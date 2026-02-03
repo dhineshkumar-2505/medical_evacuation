@@ -29,9 +29,13 @@ const app = express();
 const httpServer = createServer(app);
 
 // Socket.io setup with CORS
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+    ? process.env.ALLOWED_ORIGINS.split(',')
+    : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175', 'http://localhost:5176', 'http://localhost:5177', 'http://localhost:5178'];
+
 const io = new Server(httpServer, {
     cors: {
-        origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175', 'http://localhost:5176', 'http://localhost:5178'],
+        origin: allowedOrigins,
         methods: ['GET', 'POST', 'PATCH', 'DELETE'],
         credentials: true
     }
@@ -49,7 +53,7 @@ app.use(securityMiddleware);
 
 // 2. CORS (Cross-Origin Resource Sharing)
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175', 'http://localhost:5176', 'http://localhost:5178'],
+    origin: allowedOrigins,
     credentials: true
 }));
 
