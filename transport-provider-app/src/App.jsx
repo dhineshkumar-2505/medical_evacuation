@@ -13,7 +13,7 @@ import RequestMonitor from './components/requests/RequestMonitor'
 import Analytics from './components/analytics/Analytics'
 import BookingRequests from './components/bookings/BookingRequests'
 import DriverAssignment from './components/bookings/DriverAssignment'
-import DevPanel from '../../shared-components/DevPanel'
+import DevPanel from './components/shared/DevPanel'
 
 function App() {
     const [session, setSession] = useState(null)
