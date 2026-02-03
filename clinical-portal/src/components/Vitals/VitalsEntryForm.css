@@ -1,0 +1,318 @@
+/* =====================================================
+   VITALS ENTRY FORM - PREMIUM ENHANCED DESIGN
+   ===================================================== */
+
+.vitals-entry {
+    width: 100%;
+}
+
+.form-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    margin: 0 0 var(--space-5) 0;
+    color: var(--color-text-primary);
+}
+
+.form-title svg {
+    color: var(--color-accent-500);
+}
+
+.form-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-12);
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+.form-placeholder svg {
+    opacity: 0.3;
+    margin-bottom: var(--space-3);
+}
+
+.form-error {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-4);
+    font-size: var(--font-size-sm);
+}
+
+/* =====================================================
+   VITALS GRID - 3 + 2 Layout
+   ===================================================== */
+.vitals-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+}
+
+.vitals-row.row-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/* =====================================================
+   VITAL CARD - ENHANCED PREMIUM
+   ===================================================== */
+.vital-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-6);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(240, 253, 250, 0.8));
+    border: 2px solid rgba(20, 184, 166, 0.15);
+    border-radius: var(--radius-2xl);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.vital-card:focus-within {
+    border-color: var(--color-accent-400);
+    box-shadow: 0 0 0 4px hsla(185, 80%, 48%, 0.15), 0 8px 30px rgba(20, 184, 166, 0.1);
+    transform: translateY(-2px);
+}
+
+/* CRITICAL STATE - RED GLOW */
+.vital-card.critical {
+    border-color: #ef4444;
+    background: linear-gradient(145deg, rgba(254, 242, 242, 1), rgba(254, 226, 226, 0.9));
+    box-shadow:
+        0 0 0 4px rgba(239, 68, 68, 0.15),
+        0 0 30px rgba(239, 68, 68, 0.2),
+        0 8px 40px rgba(239, 68, 68, 0.15);
+    animation: criticalPulse 2s ease-in-out infinite;
+}
+
+@keyframes criticalPulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 0 4px rgba(239, 68, 68, 0.15),
+            0 0 30px rgba(239, 68, 68, 0.2),
+            0 8px 40px rgba(239, 68, 68, 0.15);
+    }
+
+    50% {
+        box-shadow:
+            0 0 0 8px rgba(239, 68, 68, 0.1),
+            0 0 50px rgba(239, 68, 68, 0.35),
+            0 8px 50px rgba(239, 68, 68, 0.25);
+    }
+}
+
+/* ICONS - LARGER SIZE */
+.vital-card .icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: var(--space-3);
+    transition: all 0.3s ease;
+}
+
+.vital-card:focus-within .icon {
+    transform: scale(1.1);
+}
+
+.vital-card.critical .icon {
+    animation: iconShake 0.5s ease-in-out;
+}
+
+@keyframes iconShake {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-5deg);
+    }
+
+    75% {
+        transform: rotate(5deg);
+    }
+}
+
+.icon.heart {
+    color: hsl(0, 80%, 58%);
+}
+
+.icon.spo2 {
+    color: hsl(205, 85%, 55%);
+}
+
+.icon.bp {
+    color: hsl(270, 75%, 60%);
+}
+
+.icon.temp {
+    color: hsl(38, 95%, 50%);
+}
+
+.icon.rr {
+    color: hsl(152, 70%, 42%);
+}
+
+.vital-card .label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: var(--space-3);
+}
+
+.vital-card input {
+    width: 100%;
+    max-width: 90px;
+    text-align: center;
+    font-family: var(--font-family-display);
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+
+.vital-card.critical input {
+    color: #dc2626;
+}
+
+.vital-card input:focus {
+    outline: none;
+}
+
+.vital-card input::placeholder {
+    color: var(--color-text-muted);
+    font-weight: 400;
+}
+
+.vital-card .unit {
+    font-size: 11px;
+    color: var(--color-text-muted);
+    margin-top: 6px;
+    font-weight: 500;
+}
+
+/* =====================================================
+   BLOOD PRESSURE CARD - FIXED ALIGNMENT
+   ===================================================== */
+.bp-card {
+    min-width: 0;
+}
+
+.bp-inputs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+}
+
+.bp-inputs input {
+    width: 55px;
+    max-width: 55px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.bp-inputs .slash {
+    font-size: 1.75rem;
+    color: var(--color-text-muted);
+    font-weight: 300;
+}
+
+/* =====================================================
+   CRITICAL ALERT
+   ===================================================== */
+.critical-alert {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05));
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #dc2626;
+    padding: var(--space-4);
+    border-radius: var(--radius-xl);
+    margin-bottom: var(--space-4);
+    font-weight: 700;
+    font-size: var(--font-size-sm);
+    animation: alertPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes alertPulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        background-position: 0% 50%;
+    }
+
+    50% {
+        opacity: 0.85;
+    }
+}
+
+/* =====================================================
+   BUTTON GROUP
+   ===================================================== */
+.button-group {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+}
+
+.submit-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-6);
+    font-size: var(--font-size-md);
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--color-accent-500), var(--color-success));
+    border-radius: var(--radius-xl);
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(20, 184, 166, 0.3);
+}
+
+.complete-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-5);
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-radius: var(--radius-xl);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.complete-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+}
+
+.complete-btn:active {
+    transform: translateY(0);
+}

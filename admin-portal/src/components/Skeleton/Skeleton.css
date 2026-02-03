@@ -1,0 +1,141 @@
+/* Skeleton Loading Component Styles */
+
+.skeleton {
+    background: linear-gradient(90deg, 
+        rgba(255,255,255,0.1) 25%, 
+        rgba(255,255,255,0.2) 50%, 
+        rgba(255,255,255,0.1) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+}
+
+.skeleton-light {
+    background: linear-gradient(90deg, 
+        #f0f0f0 25%, 
+        #e0e0e0 50%, 
+        #f0f0f0 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Skeleton Card */
+.skeleton-card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.skeleton-card-light {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid #e2e8f0;
+}
+
+/* Skeleton Text Lines */
+.skeleton-text {
+    height: 16px;
+    margin-bottom: 8px;
+}
+
+.skeleton-text-sm {
+    height: 12px;
+    margin-bottom: 6px;
+}
+
+.skeleton-text-lg {
+    height: 24px;
+    margin-bottom: 12px;
+}
+
+.skeleton-text:last-child {
+    width: 60%;
+}
+
+/* Skeleton Circle (Avatar) */
+.skeleton-circle {
+    border-radius: 50%;
+}
+
+.skeleton-circle-sm { width: 32px; height: 32px; }
+.skeleton-circle-md { width: 48px; height: 48px; }
+.skeleton-circle-lg { width: 64px; height: 64px; }
+
+/* Skeleton Stats Grid */
+.skeleton-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.skeleton-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.skeleton-stat-card-light {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px;
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.skeleton-stat-content {
+    flex: 1;
+}
+
+/* Skeleton Table */
+.skeleton-table {
+    width: 100%;
+}
+
+.skeleton-table-row {
+    display: flex;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.skeleton-table-row-light {
+    display: flex;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.skeleton-table-cell {
+    flex: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .skeleton-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .skeleton-stats-grid {
+        grid-template-columns: 1fr;
+    }
+}

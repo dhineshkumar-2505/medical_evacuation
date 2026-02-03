@@ -1,0 +1,334 @@
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ========== MEDICAL THEMED BACKGROUND ========== */
+.login-background {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+            hsl(185, 60%, 12%) 0%,
+            hsl(185, 50%, 18%) 50%,
+            hsl(152, 50%, 15%) 100%);
+    z-index: 0;
+}
+
+/* Gradient Overlay */
+.login-background::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 20% 0%, hsla(185, 80%, 48%, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 100%, hsla(152, 70%, 42%, 0.25) 0%, transparent 50%);
+}
+
+/* Grid Pattern */
+.login-background::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+/* ========== FLOATING ORBS ========== */
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: floatOrb 20s ease-in-out infinite;
+}
+
+.orb-1 {
+    width: 450px;
+    height: 450px;
+    background: linear-gradient(135deg, var(--color-accent-400), var(--color-success));
+    top: -150px;
+    right: -150px;
+    opacity: 0.4;
+}
+
+.orb-2 {
+    width: 350px;
+    height: 350px;
+    background: linear-gradient(135deg, var(--color-success), var(--color-accent-400));
+    bottom: -100px;
+    left: -100px;
+    opacity: 0.35;
+    animation-delay: -5s;
+}
+
+.orb-3 {
+    width: 250px;
+    height: 250px;
+    background: var(--color-accent-300);
+    top: 50%;
+    left: 30%;
+    opacity: 0.2;
+    animation-delay: -10s;
+}
+
+/* Pulse Rings (Medical Theme) */
+.pulse-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid hsla(185, 80%, 48%, 0.2);
+    animation: pulseRing 4s ease-out infinite;
+}
+
+.pulse-ring-1 {
+    width: 300px;
+    height: 300px;
+    top: 20%;
+    right: 15%;
+}
+
+.pulse-ring-2 {
+    width: 200px;
+    height: 200px;
+    bottom: 25%;
+    left: 10%;
+    animation-delay: -2s;
+}
+
+@keyframes floatOrb {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    25% {
+        transform: translate(30px, -30px) scale(1.03);
+    }
+
+    50% {
+        transform: translate(-20px, 20px) scale(0.97);
+    }
+
+    75% {
+        transform: translate(20px, 30px) scale(1.01);
+    }
+}
+
+@keyframes pulseRing {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* ========== LOGIN CARD ========== */
+.login-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 460px;
+    margin: var(--space-4);
+    padding: var(--space-12);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-3xl);
+    box-shadow: 0 32px 64px rgba(0, 0, 0, 0.4);
+    animation: cardEntry 0.6s var(--ease-out);
+}
+
+/* Teal Top Gradient */
+.login-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    height: 3px;
+    background: linear-gradient(90deg,
+            transparent,
+            var(--color-accent-400),
+            var(--color-success),
+            transparent);
+    border-radius: var(--radius-full);
+}
+
+@keyframes cardEntry {
+    0% {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ========== LOGO ========== */
+.login-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-10);
+}
+
+.login-logo-icon,
+.logo-icon {
+    width: 64px;
+    height: 64px;
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, var(--color-accent-400), var(--color-success));
+    border-radius: var(--radius-2xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-glow-accent);
+    animation: float 4s ease-in-out infinite;
+}
+
+.login-logo-text,
+.login-logo h1 {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-extrabold);
+    background: linear-gradient(135deg, white, var(--color-accent-300));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+}
+
+/* ========== HEADER ========== */
+.login-header {
+    text-align: center;
+    margin-bottom: var(--space-10);
+}
+
+.login-title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: white;
+    margin-bottom: var(--space-3);
+}
+
+.login-subtitle {
+    font-size: var(--font-size-sm);
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 300px;
+    margin: 0 auto;
+    line-height: var(--line-height-relaxed);
+}
+
+/* ========== FEATURES LIST ========== */
+.features-list,
+.login-features {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-bottom: var(--space-8);
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: rgba(20, 184, 166, 0.1);
+    border: 1px solid rgba(20, 184, 166, 0.2);
+    border-radius: var(--radius-xl);
+}
+
+.feature-icon {
+    font-size: 1.25rem;
+    color: var(--color-accent-400);
+}
+
+.feature-item span:last-child {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: var(--font-size-sm);
+}
+
+/* ========== GOOGLE BUTTON ========== */
+.google-login-btn,
+.google-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-6);
+    background: white;
+    border: none;
+    border-radius: var(--radius-xl);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.google-login-btn:hover,
+.google-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), var(--shadow-glow-accent);
+}
+
+.google-login-btn:disabled,
+.google-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.google-icon {
+    width: 22px;
+    height: 22px;
+}
+
+/* ========== FOOTER ========== */
+.login-footer {
+    margin-top: var(--space-10);
+    text-align: center;
+    padding-top: var(--space-6);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.login-footer p {
+    font-size: var(--font-size-xs);
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 640px) {
+    .login-card {
+        padding: var(--space-8);
+        margin: var(--space-4);
+    }
+
+    .login-logo-icon,
+    .logo-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.75rem;
+    }
+
+    .login-logo-text,
+    .login-logo h1 {
+        font-size: var(--font-size-2xl);
+    }
+}

@@ -1,0 +1,301 @@
+.dashboard-premium {
+    animation: fadeInUp 0.4s var(--ease-out);
+}
+
+/* Header */
+.dashboard-header-premium {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-8);
+}
+
+.dashboard-title-gradient {
+    font-size: var(--font-size-3xl);
+    font-weight: 900;
+    background: linear-gradient(135deg, #14b8a6, #3b82f6, #8b5cf6);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+}
+
+.dashboard-subtitle {
+    color: var(--color-text-secondary);
+    margin: 4px 0 0 0;
+    font-size: var(--font-size-sm);
+}
+
+/* Stats Grid */
+.stats-grid-premium {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+    margin-bottom: var(--space-8);
+}
+
+@media (max-width: 800px) {
+    .stats-grid-premium {
+        grid-template-columns: 1fr;
+    }
+}
+
+.stat-card-premium {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95));
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-5);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card-premium::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+}
+
+.stat-card-premium.primary::before {
+    background: linear-gradient(180deg, #14b8a6, #3b82f6);
+}
+
+.stat-card-premium.secondary::before {
+    background: linear-gradient(180deg, #8b5cf6, #ec4899);
+}
+
+.stat-card-premium.tertiary::before {
+    background: linear-gradient(180deg, #f59e0b, #ef4444);
+}
+
+.stat-icon-box {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.stat-card-premium.primary .stat-icon-box {
+    background: linear-gradient(135deg, #14b8a6, #3b82f6);
+}
+
+.stat-card-premium.secondary .stat-icon-box {
+    background: linear-gradient(135deg, #8b5cf6, #ec4899);
+}
+
+.stat-card-premium.tertiary .stat-icon-box {
+    background: linear-gradient(135deg, #f59e0b, #ef4444);
+}
+
+.stat-value-large {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-3xl);
+    font-weight: 900;
+    color: var(--color-text-primary);
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+/* Dashboard Grid */
+.dashboard-grid-premium {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+}
+
+@media (max-width: 900px) {
+    .dashboard-grid-premium {
+        grid-template-columns: 1fr;
+    }
+}
+
+.dashboard-panel-premium {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95));
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-5);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+}
+
+.panel-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.panel-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    margin: 0;
+    color: var(--color-text-primary);
+}
+
+.panel-title svg {
+    color: var(--color-accent-500);
+}
+
+.panel-link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-accent-500);
+    text-decoration: none;
+}
+
+.panel-link:hover {
+    text-decoration: underline;
+}
+
+/* Patient List */
+.patient-list-premium {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.patient-item-premium {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    background: rgba(0, 0, 0, 0.015);
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.patient-item-premium:hover {
+    background: rgba(20, 184, 166, 0.08);
+    transform: translateX(4px);
+}
+
+.patient-avatar-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--color-accent-400), #3b82f6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: var(--font-size-sm);
+}
+
+.patient-info-col {
+    flex: 1;
+}
+
+.patient-name {
+    display: block;
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+}
+
+.patient-meta {
+    font-size: 12px;
+    color: var(--color-text-muted);
+}
+
+.view-btn-small {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid rgba(20, 184, 166, 0.2);
+    background: white;
+    color: var(--color-accent-500);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.view-btn-small:hover {
+    background: var(--color-accent-500);
+    color: white;
+}
+
+/* Quick Actions */
+.quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+}
+
+.quick-action-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-5);
+    background: rgba(0, 0, 0, 0.015);
+    border-radius: var(--radius-xl);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.quick-action-card:hover {
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.08), rgba(59, 130, 246, 0.05));
+    transform: translateY(-4px);
+}
+
+.action-icon.vitals {
+    color: #ef4444;
+}
+
+.action-icon.add {
+    color: #10b981;
+}
+
+.action-icon.records {
+    color: #3b82f6;
+}
+
+.action-icon.evac {
+    color: #f59e0b;
+}
+
+.action-label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+/* States */
+.panel-loading,
+.panel-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-10);
+    color: var(--color-text-muted);
+}
+
+.panel-empty svg {
+    margin-bottom: var(--space-3);
+    opacity: 0.3;
+}

@@ -1,0 +1,461 @@
+.evacuations-page {
+    animation: fadeInUp 0.4s var(--ease-out);
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-8);
+}
+
+.page-title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-extrabold);
+    margin-bottom: var(--space-2);
+    background: linear-gradient(135deg, var(--color-accent-400), var(--color-success));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.page-description {
+    font-size: var(--font-size-base);
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+/* ========================================
+   EVACUATIONS LIST
+   ======================================== */
+.evacuations-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--space-5);
+}
+
+.list-loading,
+.list-empty {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-16);
+    color: var(--color-text-muted);
+}
+
+.list-empty svg {
+    margin-bottom: var(--space-4);
+    opacity: 0.3;
+    color: var(--color-accent-400);
+}
+
+.list-empty h3 {
+    font-size: var(--font-size-xl);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+}
+
+/* Evacuation Card */
+.evacuation-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-5);
+    box-shadow: var(--shadow-card);
+    position: relative;
+    overflow: hidden;
+}
+
+.evacuation-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+}
+
+.evacuation-card.immediate::before {
+    background: linear-gradient(90deg, hsl(0, 80%, 60%), hsl(0, 80%, 45%));
+}
+
+.evacuation-card.prepare::before {
+    background: linear-gradient(90deg, hsl(38, 95%, 55%), hsl(38, 95%, 40%));
+}
+
+.evac-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+}
+
+.evac-urgency {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.evac-urgency svg {
+    color: var(--color-warning);
+}
+
+.evacuation-card.immediate .evac-urgency svg {
+    color: var(--color-danger);
+    animation: pulse 1s ease-in-out infinite;
+}
+
+.evac-patient {
+    margin-bottom: var(--space-3);
+}
+
+.patient-name {
+    display: block;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+}
+
+.patient-id {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    font-family: monospace;
+}
+
+.evac-reason,
+.evac-notes {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-2);
+}
+
+.evac-reason strong,
+.evac-notes strong {
+    color: var(--color-text-primary);
+}
+
+.evac-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: var(--space-4);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--glass-border-subtle);
+}
+
+.evac-time {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.evac-actions {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.btn-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-icon.approve {
+    color: var(--color-success);
+    border-color: hsla(152, 70%, 42%, 0.3);
+}
+
+.btn-icon.approve:hover {
+    background: var(--color-success);
+    border-color: var(--color-success);
+    color: white;
+}
+
+.btn-icon.cancel {
+    color: var(--color-danger);
+    border-color: hsla(0, 80%, 58%, 0.3);
+}
+
+.btn-icon.cancel:hover {
+    background: var(--color-danger);
+    border-color: var(--color-danger);
+    color: white;
+}
+
+.btn-sm {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--font-size-xs);
+}
+
+/* ========================================
+   MODAL
+   ======================================== */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-modal);
+    padding: var(--space-4);
+    animation: fadeIn 0.2s var(--ease-out);
+}
+
+.modal {
+    width: 100%;
+    max-width: 500px;
+    background: white;
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-2xl);
+    animation: scaleIn 0.3s var(--ease-out);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-6);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.modal-header h2 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.modal-header h2 svg {
+    color: var(--color-accent-500);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+.modal-close:hover {
+    color: var(--color-danger);
+}
+
+.modal form {
+    padding: var(--space-6);
+}
+
+.form-group {
+    margin-bottom: var(--space-5);
+}
+
+.form-group label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-2);
+}
+
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-sm);
+}
+
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-accent-400);
+    box-shadow: 0 0 0 4px hsla(185, 80%, 48%, 0.1);
+}
+
+/* Urgency Options */
+.urgency-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+}
+
+.urgency-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    background: var(--color-bg-tertiary);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-align: center;
+}
+
+.urgency-option input {
+    display: none;
+}
+
+.urgency-option:hover {
+    border-color: var(--color-accent-400);
+}
+
+.urgency-option.active {
+    border-color: var(--color-accent-400);
+    background: hsla(185, 80%, 48%, 0.1);
+}
+
+.urgency-option.active.danger {
+    border-color: var(--color-danger);
+    background: var(--color-danger-light);
+}
+
+.urgency-option svg {
+    color: var(--color-text-muted);
+}
+
+.urgency-option.active svg {
+    color: var(--color-accent-500);
+}
+
+.urgency-option.active.danger svg {
+    color: var(--color-danger);
+}
+
+.urgency-option span {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+}
+
+.urgency-option small {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border-subtle);
+}
+
+/* ========================================
+   BOOKINGS SECTION
+   ======================================== */
+.bookings-section {
+    margin-top: var(--space-10);
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-5);
+}
+
+.section-title svg {
+    color: var(--color-accent-500);
+}
+
+.list-empty.small {
+    padding: var(--space-8);
+}
+
+.list-empty.small svg {
+    margin-bottom: var(--space-2);
+}
+
+.bookings-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-4);
+}
+
+.booking-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-card);
+    position: relative;
+    overflow: hidden;
+}
+
+.booking-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+}
+
+.booking-card.pending::before {
+    background: linear-gradient(90deg, var(--color-warning), hsl(38, 95%, 55%));
+}
+
+.booking-card.confirmed::before,
+.booking-card.in_progress::before {
+    background: linear-gradient(90deg, var(--color-info), var(--color-accent-400));
+}
+
+.booking-card.completed::before {
+    background: linear-gradient(90deg, var(--color-success), hsl(152, 70%, 42%));
+}
+
+.booking-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-3);
+}
+
+.booking-header .patient-name {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+}
+
+.booking-details {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+.booking-row {
+    margin-bottom: var(--space-2);
+}
+
+.booking-row strong {
+    color: var(--color-text-primary);
+}
+
+.booking-footer {
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--glass-border-subtle);
+}
+
+.booking-time {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}

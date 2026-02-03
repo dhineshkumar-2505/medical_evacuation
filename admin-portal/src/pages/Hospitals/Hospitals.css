@@ -1,0 +1,273 @@
+.hospitals-page {
+    animation: fadeInUp 0.4s var(--ease-out);
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-10);
+    gap: var(--space-6);
+}
+
+.page-header-content {
+    flex: 1;
+}
+
+.page-header h1 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-extrabold);
+    margin-bottom: var(--space-3);
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.page-header p {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+/* ========================================
+   PREMIUM TABS
+   ======================================== */
+.tabs {
+    display: flex;
+    gap: var(--space-1);
+    margin-bottom: var(--space-8);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    padding: var(--space-2);
+    border-radius: var(--radius-2xl);
+    border: 1px solid var(--glass-border);
+    width: fit-content;
+    box-shadow: var(--shadow-sm);
+}
+
+.tab {
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.tab:hover {
+    color: var(--color-text-primary);
+    background: var(--glass-bg-subtle);
+}
+
+.tab.active {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-md), var(--shadow-glow-primary);
+}
+
+/* ========================================
+   HOSPITALS GRID
+   ======================================== */
+.hospitals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: var(--space-6);
+}
+
+.loading,
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: var(--space-16);
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-2xl);
+}
+
+.empty-icon {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: var(--space-5);
+    opacity: 0.5;
+}
+
+.empty-state p {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.loading {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-lg);
+}
+
+/* ========================================
+   HOSPITAL CARD
+   ======================================== */
+.hospital-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-card);
+    position: relative;
+}
+
+/* Top shine */
+.hospital-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    z-index: 1;
+}
+
+.hospital-card:hover {
+    border-color: var(--color-primary-400);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg), var(--shadow-glow-primary);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-5) var(--space-6);
+    background: linear-gradient(180deg, var(--glass-bg-subtle), transparent);
+    border-bottom: 1px solid var(--glass-border-subtle);
+}
+
+.card-header h3 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+/* ========================================
+   STATUS BADGES
+   ======================================== */
+.status-badge {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wide);
+}
+
+.status-badge.pending_approval {
+    background: hsla(45, 95%, 55%, 0.15);
+    color: hsl(45, 95%, 45%);
+    border: 1px solid hsla(45, 95%, 55%, 0.3);
+}
+
+.status-badge.active {
+    background: hsla(152, 70%, 42%, 0.15);
+    color: var(--color-success);
+    border: 1px solid hsla(152, 70%, 42%, 0.3);
+}
+
+.status-badge.suspended {
+    background: hsla(0, 80%, 58%, 0.15);
+    color: var(--color-danger);
+    border: 1px solid hsla(0, 80%, 58%, 0.3);
+}
+
+/* ========================================
+   CARD BODY
+   ======================================== */
+.card-body {
+    padding: var(--space-5) var(--space-6);
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--glass-border-subtle);
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-row .label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    font-weight: var(--font-weight-medium);
+}
+
+.info-row .value {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-semibold);
+    text-transform: capitalize;
+}
+
+/* ========================================
+   CARD ACTIONS
+   ======================================== */
+.card-actions {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-6);
+    background: var(--glass-bg-subtle);
+    border-top: 1px solid var(--glass-border);
+}
+
+.approve-btn,
+.reject-btn {
+    flex: 1;
+    padding: var(--space-3) var(--space-4);
+    border: none;
+    border-radius: var(--radius-xl);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+}
+
+.approve-btn {
+    background: hsla(152, 70%, 42%, 0.15);
+    color: var(--color-success);
+    border: 1px solid hsla(152, 70%, 42%, 0.3);
+}
+
+.approve-btn:hover {
+    background: var(--color-success);
+    color: white;
+    box-shadow: var(--shadow-glow-success);
+    transform: scale(1.02);
+}
+
+.reject-btn {
+    background: hsla(0, 80%, 58%, 0.15);
+    color: var(--color-danger);
+    border: 1px solid hsla(0, 80%, 58%, 0.3);
+}
+
+.reject-btn:hover {
+    background: var(--color-danger);
+    color: white;
+    box-shadow: var(--shadow-glow-danger);
+    transform: scale(1.02);
+}

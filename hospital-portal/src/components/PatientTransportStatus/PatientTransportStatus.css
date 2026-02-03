@@ -1,0 +1,380 @@
+/* ========================================
+   PATIENT TRANSPORT STATUS - PREMIUM DESIGN
+   ======================================== */
+
+.transport-status-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 2px solid rgba(59, 130, 246, 0.1);
+    border-radius: 16px;
+    padding: 24px;
+    margin: 24px 0;
+}
+
+/* ========================================
+   STATUS HEADER
+   ======================================== */
+
+.status-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.status-header svg {
+    color: #3b82f6;
+}
+
+.status-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+    flex: 1;
+}
+
+.status-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status-badge.status-warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: #d97706;
+}
+
+.status-badge.status-info {
+    background: rgba(59, 130, 246, 0.1);
+    color: #2563eb;
+}
+
+.status-badge.status-success {
+    background: rgba(16, 185, 129, 0.1);
+    color: #059669;
+}
+
+.status-badge.status-neutral {
+    background: rgba(100, 116, 139, 0.1);
+    color: #64748b;
+}
+
+/* ========================================
+   TRANSPORT TIMELINE
+   ======================================== */
+
+.transport-timeline {
+    margin-bottom: 28px;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.03) 0%, rgba(139, 92, 246, 0.03) 100%);
+    border-radius: 12px;
+}
+
+.timeline-step {
+    display: flex;
+    gap: 16px;
+    position: relative;
+    padding-bottom: 24px;
+}
+
+.timeline-step:last-child {
+    padding-bottom: 0;
+}
+
+.timeline-step:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 28px;
+    bottom: 0;
+    width: 2px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.timeline-step.completed:not(:last-child)::before {
+    background: linear-gradient(180deg, #10b981 0%, rgba(16, 185, 129, 0.3) 100%);
+}
+
+.timeline-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.1);
+    border: 3px solid white;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.timeline-step.completed .timeline-dot {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.timeline-content {
+    flex: 1;
+    padding-top: 2px;
+}
+
+.timeline-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+}
+
+.timeline-step.completed .timeline-label {
+    color: #059669;
+}
+
+.timeline-time {
+    font-size: 12px;
+    color: #64748b;
+    margin: 0;
+}
+
+/* ========================================
+   TRANSPORT DETAILS
+   ======================================== */
+
+.transport-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.detail-item {
+    display: flex;
+    gap: 12px;
+    padding: 14px;
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.detail-item:hover {
+    background: rgba(59, 130, 246, 0.05);
+}
+
+.detail-item.eta-highlight {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.detail-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3b82f6;
+    flex-shrink: 0;
+}
+
+.detail-icon.vehicle-icon {
+    font-size: 20px;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(251, 191, 36, 0.1) 100%);
+}
+
+.detail-content {
+    flex: 1;
+}
+
+.detail-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    margin: 0 0 6px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail-value {
+    font-size: 15px;
+    font-weight: 600;
+    color: #0f172a;
+    margin: 0;
+}
+
+.detail-arrow {
+    font-size: 14px;
+    color: #3b82f6;
+    margin: 4px 0;
+}
+
+.detail-meta {
+    font-size: 13px;
+    color: #64748b;
+    font-family: 'Courier New', monospace;
+    margin: 4px 0 0 0;
+}
+
+.detail-contact {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #64748b;
+    margin: 6px 0 0 0;
+}
+
+.detail-contact svg {
+    color: #3b82f6;
+}
+
+.eta-value {
+    color: #3b82f6 !important;
+    font-size: 16px !important;
+}
+
+/* ========================================
+   RISK BADGE
+   ======================================== */
+
+.risk-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.risk-badge.risk-critical {
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+    color: white;
+}
+
+.risk-badge.risk-high {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+}
+
+.risk-badge.risk-moderate {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+}
+
+.risk-badge.risk-low {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+/* ========================================
+   SPECIAL REQUIREMENTS
+   ======================================== */
+
+.special-requirements {
+    margin-top: 20px;
+    padding: 14px;
+    background: rgba(245, 158, 11, 0.05);
+    border-left: 3px solid #f59e0b;
+    border-radius: 8px;
+}
+
+.special-requirements strong {
+    font-size: 13px;
+    color: #d97706;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.special-requirements p {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* ========================================
+   LOADING & ERROR STATES
+   ======================================== */
+
+.loading-state-small,
+.error-state-small,
+.empty-state-small {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.spinner-small {
+    width: 32px;
+    height: 32px;
+    border: 3px solid rgba(59, 130, 246, 0.1);
+    border-top-color: #3b82f6;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 12px;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-state-small p,
+.error-state-small p,
+.empty-state-small p {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+}
+
+.error-state-small {
+    color: #dc2626;
+}
+
+.error-state-small svg {
+    color: #dc2626;
+    margin-bottom: 8px;
+}
+
+.empty-state-small {
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 8px;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .transport-status-card {
+        padding: 20px 16px;
+    }
+
+    .status-header {
+        flex-wrap: wrap;
+    }
+
+    .transport-timeline {
+        padding: 16px;
+    }
+
+    .timeline-step {
+        gap: 12px;
+    }
+
+    .detail-item {
+        padding: 12px;
+    }
+}

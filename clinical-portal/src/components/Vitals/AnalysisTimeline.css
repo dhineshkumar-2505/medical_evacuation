@@ -1,0 +1,118 @@
+/* Timeline Container */
+.analysis-timeline {
+    width: 100%;
+    margin-top: var(--space-6);
+}
+
+.timeline-cards {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.timeline-card {
+    background: var(--glass-bg-subtle);
+    border: 1px solid var(--glass-border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    position: relative;
+    border-left: 4px solid var(--glass-border);
+    transition: all 0.3s ease;
+}
+
+.timeline-card:hover {
+    transform: translateX(4px);
+    border-left-color: var(--color-accent-500);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-3);
+}
+
+.seq-badge {
+    background: var(--color-bg-tertiary);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    padding: 2px 8px;
+    border-radius: 12px;
+    color: var(--color-text-secondary);
+}
+
+.time-badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+/* Metrics Grid */
+.card-metrics {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+    border-bottom: 1px solid var(--glass-border-subtle);
+    padding-bottom: var(--space-3);
+    text-align: center;
+}
+
+.metric {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.metric .label {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 2px;
+}
+
+.metric .value {
+    font-family: var(--font-family-display);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+}
+
+/* Status */
+.card-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.status-badge {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    padding: 2px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-badge.stable {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+}
+
+.status-badge.observe {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+}
+
+.status-badge.critical {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+}
+
+.timeline-empty {
+    text-align: center;
+    padding: var(--space-8);
+    color: var(--color-text-muted);
+    opacity: 0.6;
+}

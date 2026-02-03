@@ -1,0 +1,215 @@
+/* ClinicDetailsModal.css */
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+    background: rgba(255, 255, 255, 0.95);
+    width: 90%;
+    max-width: 600px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    overflow: hidden;
+    position: relative;
+    animation: scaleIn 0.3s ease-out;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Header with Gradient */
+.modal-header {
+    background: linear-gradient(135deg, #dcfce7, #d1fae5);
+    /* Light green gradient */
+    padding: 24px 32px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+/* Remove the gradient overlay/before element to ensure clarity */
+.modal-header::before {
+    display: none;
+}
+
+.modal-close {
+    background: #fee2e2;
+    /* Light red background */
+    border: 1px solid #fecaca;
+    min-width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: #ef4444;
+    /* Red text/icon */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.2s;
+    margin-top: -8px;
+    margin-right: -8px;
+}
+
+.modal-close:hover {
+    background: #fecaca;
+    color: #dc2626;
+    transform: rotate(90deg);
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+}
+
+.clinic-icon-large {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #059669, #047857);
+    /* Darker green icon bg for contrast */
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 8px 24px rgba(5, 150, 105, 0.2);
+}
+
+.modal-title-group h2 {
+    color: #064e3b !important;
+    /* Dark green/slate text */
+    font-size: 28px;
+    margin: 0;
+    margin-bottom: 4px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.modal-subtitle {
+    color: #065f46 !important;
+    /* Medium dark green for subtitle */
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+/* Body Content */
+.modal-body {
+    padding: 32px;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.detail-item {
+    background: #f8fafc;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.detail-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #64748b;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.detail-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f1f5f9;
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin-bottom: 32px;
+}
+
+.status-label {
+    font-weight: 600;
+    color: #475569;
+}
+
+/* Actions Footer */
+.modal-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 24px;
+}
+
+.btn-approve {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+    transition: transform 0.2s;
+}
+
+.btn-approve:hover {
+    transform: translateY(-2px);
+}
+
+.btn-reject {
+    background: white;
+    color: #ef4444;
+    border: 2px solid #fee2e2;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-reject:hover {
+    background: #fef2f2;
+    border-color: #fecaca;
+}

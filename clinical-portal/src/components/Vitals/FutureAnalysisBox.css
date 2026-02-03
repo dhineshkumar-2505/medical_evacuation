@@ -1,0 +1,190 @@
+.future-locked {
+    background: var(--glass-bg-subtle);
+    border: 1px dashed var(--glass-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    text-align: center;
+    margin-top: var(--space-6);
+}
+
+.lock-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.lock-icon {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-2);
+}
+
+.future-locked h4 {
+    margin: 0;
+    color: var(--color-text-secondary);
+}
+
+.future-locked p {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.progress-bar {
+    width: 200px;
+    height: 6px;
+    background: var(--glass-border);
+    border-radius: 3px;
+    margin-top: var(--space-4);
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--color-accent-500);
+    transition: width 0.3s ease;
+}
+
+/* Unlocked Box */
+.future-box {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(30, 64, 175, 0.05));
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    margin-top: var(--space-6);
+    position: relative;
+    overflow: hidden;
+}
+
+.future-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+}
+
+.future-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-6);
+}
+
+.future-header h3 {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0;
+    font-size: var(--font-size-lg);
+    color: #3b82f6;
+}
+
+.badge-predicted {
+    background: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+    font-size: 11px;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+/* Prediction Grid */
+.predictions-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+}
+
+.predict-card {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3);
+    text-align: center;
+}
+
+.predict-card .label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    margin-bottom: 4px;
+}
+
+.value-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+}
+
+.predict-card .value {
+    font-family: var(--font-family-display);
+    font-weight: bold;
+    font-size: var(--font-size-lg);
+    color: var(--color-text-primary);
+}
+
+.trend-arrow {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.trend-arrow.up {
+    color: #ef4444;
+}
+
+/* Usually bad for HR/RR/Temp */
+.trend-arrow.down {
+    color: #f59e0b;
+}
+
+/* Bad for SpObs */
+
+/* Risk Summary */
+.risk-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--space-4);
+    border-top: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.risk-score {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+}
+
+.score-label {
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.score-value {
+    font-family: var(--font-family-display);
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.score-value.critical {
+    color: #ef4444;
+}
+
+.score-value.observe {
+    color: #f59e0b;
+}
+
+.score-value.normal {
+    color: #10b981;
+}
+
+.score-max {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}

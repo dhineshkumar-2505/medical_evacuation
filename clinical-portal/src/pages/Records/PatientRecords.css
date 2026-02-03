@@ -1,0 +1,462 @@
+/* =====================================================
+   PATIENT RECORDS DETAIL - ULTRA PREMIUM V3
+   ===================================================== */
+
+.patient-records-premium {
+    animation: fadeInUp 0.4s var(--ease-out);
+}
+
+.loading-page,
+.error-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    color: var(--color-text-muted);
+}
+
+/* Back Button */
+.back-btn-premium {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    background: transparent;
+    border: none;
+    color: var(--color-accent-500);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: var(--space-6);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-lg);
+    transition: all 0.2s ease;
+}
+
+.back-btn-premium:hover {
+    background: rgba(20, 184, 166, 0.1);
+    transform: translateX(-4px);
+}
+
+/* Patient Header */
+.patient-header-premium {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95));
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-6);
+    margin-bottom: var(--space-6);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+}
+
+.header-avatar-large {
+    width: 72px;
+    height: 72px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--color-accent-400), #3b82f6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 8px 24px rgba(20, 184, 166, 0.25);
+}
+
+.header-info-col {
+    flex: 1;
+}
+
+.patient-name-large {
+    margin: 0;
+    font-size: var(--font-size-2xl);
+    font-weight: 800;
+    color: var(--color-text-primary);
+}
+
+.patient-meta-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+.header-badges-row {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.status-badge-large {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 10px;
+    text-transform: uppercase;
+}
+
+.status-badge-large.status-stable {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+}
+
+.status-badge-large.status-observe {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+}
+
+.status-badge-large.status-critical {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+}
+
+.blood-badge-large {
+    background: rgba(139, 92, 246, 0.15);
+    color: #8b5cf6;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 10px;
+}
+
+/* Risk Summary Bar */
+.risk-summary-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.03));
+    border: 1px solid rgba(59, 130, 246, 0.15);
+    border-radius: var(--radius-xl);
+    padding: var(--space-4) var(--space-6);
+    margin-bottom: var(--space-6);
+}
+
+.risk-info {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+}
+
+.risk-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+}
+
+.risk-value {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-xl);
+    font-weight: 900;
+}
+
+.risk-value.status-stable {
+    color: #10b981;
+}
+
+.risk-value.status-observe {
+    color: #f59e0b;
+}
+
+.risk-value.status-critical {
+    color: #ef4444;
+}
+
+.risk-explanation {
+    flex: 1;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    padding-left: var(--space-6);
+    border-left: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+/* Timeline Section */
+.timeline-section {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.9));
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: var(--radius-2xl);
+    padding: var(--space-6);
+}
+
+.timeline-title-premium {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    margin: 0 0 var(--space-6) 0;
+    color: var(--color-text-primary);
+}
+
+.timeline-title-premium svg {
+    color: var(--color-accent-500);
+}
+
+.record-count-badge {
+    margin-left: auto;
+    font-size: 11px;
+    background: rgba(20, 184, 166, 0.1);
+    color: var(--color-accent-500);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.empty-timeline-premium {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-16);
+    color: var(--color-text-muted);
+}
+
+.empty-timeline-premium svg {
+    opacity: 0.3;
+    margin-bottom: var(--space-4);
+}
+
+/* Date Groups */
+.date-groups-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+}
+
+.date-group-premium {
+    position: relative;
+}
+
+.date-header-premium {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: 700;
+    font-size: var(--font-size-sm);
+    color: white;
+    margin-bottom: var(--space-5);
+    padding: var(--space-2) var(--space-4);
+    background: linear-gradient(135deg, var(--color-accent-500), #3b82f6);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 12px rgba(20, 184, 166, 0.2);
+}
+
+.date-header-premium svg {
+    color: white;
+}
+
+/* Records Grid - Premium */
+.records-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-5);
+}
+
+/* Ultra Premium Record Card */
+.record-card-premium {
+    position: relative;
+    background: linear-gradient(145deg, #ffffff, #f8fafc);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    border-radius: 20px;
+    padding: 0;
+    overflow: hidden;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 4px 6px rgba(0, 0, 0, 0.02),
+        0 10px 20px rgba(0, 0, 0, 0.03);
+}
+
+.record-card-premium:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow:
+        0 20px 40px rgba(20, 184, 166, 0.15),
+        0 8px 16px rgba(0, 0, 0, 0.08);
+    border-color: rgba(20, 184, 166, 0.3);
+}
+
+/* Card Header with gradient strip */
+.record-card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.08), rgba(59, 130, 246, 0.05));
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    position: relative;
+}
+
+.record-card-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #14b8a6, #3b82f6, #8b5cf6);
+}
+
+.record-seq {
+    background: linear-gradient(135deg, var(--color-accent-500), #3b82f6);
+    color: white;
+    font-weight: 800;
+    font-size: 12px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+}
+
+.record-time {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    flex: 1;
+}
+
+.record-time svg {
+    color: var(--color-accent-500);
+}
+
+.record-status {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 6px 14px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.record-status.status-stable {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.1));
+    color: #059669;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+}
+
+.record-status.status-observe {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.1));
+    color: #d97706;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
+}
+
+.record-status.status-critical {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(220, 38, 38, 0.1));
+    color: #dc2626;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+}
+
+/* Ultra Premium Vitals Grid */
+.record-vitals-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: var(--space-5);
+}
+
+.vital-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.8));
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    border-radius: 14px;
+    padding: 14px 16px;
+    transition: all 0.25s ease;
+}
+
+.vital-box:hover {
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.05), rgba(59, 130, 246, 0.03));
+    border-color: rgba(20, 184, 166, 0.15);
+    transform: scale(1.02);
+}
+
+.vital-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    padding: 4px;
+    border-radius: 8px;
+}
+
+.vital-icon.heart {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.vital-icon.spo2 {
+    color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.vital-icon.bp {
+    color: #8b5cf6;
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.vital-icon.temp {
+    color: #f59e0b;
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.vital-data {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.vital-value {
+    font-family: var(--font-family-display);
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1;
+}
+
+.vital-unit {
+    font-size: 10px;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.record-card-premium {
+    animation: fadeInUp 0.4s ease backwards;
+}
+
+.records-grid .record-card-premium:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.records-grid .record-card-premium:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.records-grid .record-card-premium:nth-child(3) {
+    animation-delay: 0.15s;
+}
+
+.records-grid .record-card-premium:nth-child(4) {
+    animation-delay: 0.2s;
+}
+
+.records-grid .record-card-premium:nth-child(5) {
+    animation-delay: 0.25s;
+}
+
+.records-grid .record-card-premium:nth-child(6) {
+    animation-delay: 0.3s;
+}

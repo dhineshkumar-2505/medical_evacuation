@@ -1,0 +1,166 @@
+.driver-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.driver-card {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-base);
+}
+
+.driver-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.driver-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.driver-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.driver-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+}
+
+.driver-info h3 {
+    font-size: var(--font-size-lg);
+    margin: 0;
+}
+
+.driver-email {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    margin: 0;
+}
+
+.driver-details {
+    margin-bottom: var(--spacing-lg);
+}
+
+.invitation-section {
+    background: var(--color-bg-secondary);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+}
+
+.invitation-link {
+    flex: 1;
+    overflow: hidden;
+}
+
+.invitation-link code {
+    display: block;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-sm);
+    font-size: var(--font-size-xs);
+    font-family: 'Courier New', monospace;
+    color: var(--color-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-sm.copied {
+    background-color: var(--color-success);
+    color: white;
+}
+
+.text-success {
+    color: var(--color-success);
+    font-weight: 600;
+}
+
+.text-warning {
+    color: var(--color-warning);
+    font-weight: 600;
+}
+
+.btn-delete-icon {
+    background: none;
+    border: none;
+    color: var(--color-danger);
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-delete-icon:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+}
+
+@media (max-width: 768px) {
+    .driver-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+    }
+
+    .invitation-section {
+        flex-direction: column;
+    }
+
+    .invitation-section button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Vehicle Select Dropdown */
+.vehicle-select {
+    padding: 6px 12px;
+    font-size: var(--font-size-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    color: var(--color-text);
+    cursor: pointer;
+    min-width: 200px;
+    transition: all var(--transition-base);
+}
+
+.vehicle-select:hover {
+    border-color: var(--color-primary);
+}
+
+.vehicle-select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.form-help {
+    font-size: var(--font-size-xs);
+    margin-top: var(--spacing-xs);
+}
