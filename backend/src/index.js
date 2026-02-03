@@ -31,7 +31,14 @@ const httpServer = createServer(app);
 // Socket.io setup with CORS
 const allowedOrigins = process.env.ALLOWED_ORIGINS
     ? process.env.ALLOWED_ORIGINS.split(',')
-    : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175', 'http://localhost:5176', 'http://localhost:5177', 'http://localhost:5178'];
+    : [
+        'http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175', 'http://localhost:5176', 'http://localhost:5177', 'http://localhost:5178',
+        'https://island-clinical-portal.vercel.app',
+        'https://island-hospital-portal.vercel.app',
+        'https://island-admin-portal.vercel.app',
+        'https://island-transport-app.vercel.app',
+        'https://island-driver-app.vercel.app'
+    ];
 
 const io = new Server(httpServer, {
     cors: {
