@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import './CriticalCases.css';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 const CriticalCases = () => {
     const { hospital } = useAuth();
@@ -18,7 +18,7 @@ const CriticalCases = () => {
         if (!hospital?.id) return;
 
         try {
-            const criticalRes = await fetch(`${API_URL}/api/critical/hospital/${hospital.id}`);
+            const criticalRes = await fetch(`${API_URL}/critical/hospital/${hospital.id}`);
             const criticalData = await criticalRes.json();
 
             if (criticalData.success) {

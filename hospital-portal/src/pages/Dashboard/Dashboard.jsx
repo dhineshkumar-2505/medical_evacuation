@@ -5,7 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import './Dashboard.css';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 const Dashboard = () => {
     const { hospital, user } = useAuth();
@@ -21,7 +21,7 @@ const Dashboard = () => {
         if (!hospital?.id) return;
 
         try {
-            const criticalRes = await fetch(`${API_URL}/api/critical/hospital/${hospital.id}`);
+            const criticalRes = await fetch(`${API_URL}/critical/hospital/${hospital.id}`);
             const criticalData = await criticalRes.json();
 
             if (criticalData.success) {

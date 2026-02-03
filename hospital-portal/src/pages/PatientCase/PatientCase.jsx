@@ -8,7 +8,7 @@ import {
 } from 'recharts';
 import './PatientCase.css';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 const PatientCase = () => {
     const { caseId } = useParams();
@@ -31,7 +31,7 @@ const PatientCase = () => {
         try {
             // Get specific case details
             // In a real app we might have a direct endpoint, but here we can fetch lists
-            const criticalRes = await fetch(`${API_URL}/api/critical/hospital/${hospital?.id}`);
+            const criticalRes = await fetch(`${API_URL}/critical/hospital/${hospital?.id}`);
             const criticalData = await criticalRes.json();
 
             if (criticalData.success) {
@@ -41,7 +41,7 @@ const PatientCase = () => {
                     setCaseData(foundCase);
 
                     // Fetch patient details
-                    const patientRes = await fetch(`${API_URL}/api/critical/patient/${foundCase.patient_id}`);
+                    const patientRes = await fetch(`${API_URL}/critical/patient/${foundCase.patient_id}`);
                     const patientData = await patientRes.json();
 
                     if (patientData.success) {
@@ -66,7 +66,7 @@ const PatientCase = () => {
 
         setAcknowledging(true);
         try {
-            const res = await fetch(`${API_URL}/api/critical/acknowledge/${caseData.id}`, {
+            const res = await fetch(`${API_URL}/critical/acknowledge/${caseData.id}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ hospital_id: hospital?.id })
