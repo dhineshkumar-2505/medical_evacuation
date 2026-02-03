@@ -7,7 +7,7 @@ import DriverLogin from './components/auth/DriverLogin'
 import DriverRegistration from './components/auth/DriverRegistration'
 import DriverDashboard from './components/dashboard/DriverDashboard'
 import ActiveTrip from './components/trip/ActiveTrip'
-import DevPanel from '../../shared-components/DevPanel'
+import DevPanel from './components/shared/DevPanel'
 
 function App() {
     const [loading, setLoading] = useState(true)
