@@ -6,6 +6,9 @@ import './AppLayout.css';
 export default function AppLayout() {
     const { hospital, user, signOut } = useAuth();
     const location = useLocation();
+    useEffect(() => {
+        console.log('🚀 Current API_URL:', import.meta.env.VITE_API_URL || 'FALLBACK: http://localhost:3000');
+    }, []);
 
     const navItems = [
         { path: '/', label: 'Dashboard', icon: '📊' },
