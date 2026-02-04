@@ -51,10 +51,10 @@ function AppRouter() {
         {/* Login */}
         <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />} />
 
-        {/* Register - logged in but no clinic */}
+        {/* Register - logged in but no clinic (or rejected) */}
         <Route path="/register" element={
           !user ? <Navigate to="/login" replace /> :
-            hasClinic ? <Navigate to="/" replace /> :
+            (hasClinic && !isClinicRejected) ? <Navigate to="/" replace /> :
               <RegisterClinic />
         } />
 

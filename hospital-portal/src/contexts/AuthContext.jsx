@@ -151,12 +151,13 @@ export function AuthProvider({ children }) {
         try {
             const { data, error } = await supabase
                 .from('hospitals')
-                .insert([{
+                .upsert([{
                     ...hospitalData,
                     admin_id: user.id,
                     admin_email: user.email,
-                    status: 'pending_approval', // Enforce admin approval
-                }])
+                    status: 'pending_approval', // Reset to pending on resubmission
+                    updated_at: new Date().toISOString()
+                }], { onConflict: 'admin_id' })
                 .select()
                 .single();
 

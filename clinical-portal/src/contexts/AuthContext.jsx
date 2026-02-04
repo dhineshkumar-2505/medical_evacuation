@@ -150,6 +150,7 @@ export function AuthProvider({ children }) {
         isDoctor: profile?.role === 'clinic_doctor' || profile?.role === 'clinic_admin',
         isClinicApproved: clinic?.status === 'active',
         isClinicPending: clinic?.status === 'pending_approval',
+        isClinicRejected: clinic?.status === 'suspended',
         hasClinic: !!clinic,
     }), [user, profile, clinic, loading, initialized, signInWithGoogle, signOut, refreshClinic]);
 

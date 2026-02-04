@@ -3,10 +3,13 @@ import './Pending.css';
 
 const Pending = () => {
     const { hospital, signOut, refreshHospital } = useAuth();
+    console.log('Hospital data in Pending page:', hospital);
 
     const handleRefresh = async () => {
         await refreshHospital();
     };
+
+    const isRejected = hospital?.status?.trim().toLowerCase() === 'suspended';
 
     return (
         <div className="pending-page">
@@ -17,16 +20,25 @@ const Pending = () => {
             </div>
 
             {/* Glassmorphism Card */}
-            <div className="pending-card">
-                <div className="pending-icon">⏳</div>
-                <h1>Registration Pending</h1>
+            <div className={`pending-card ${isRejected ? 'rejected' : ''}`}>
+                <div className="pending-icon">
+                    {isRejected ? '❌' : '⏳'}
+                </div>
+                <h1>{isRejected ? 'Registration Rejected' : 'Registration Pending'}</h1>
                 <p className="hospital-name">{hospital?.name}</p>
 
                 <div className="status-info">
-                    <div className="status-badge pending">
-                        <span className="badge-dot"></span>
-                        Awaiting Admin Approval
-                    </div>
+                    {isRejected ? (
+                        <div className="status-badge rejected">
+                            <span className="badge-dot"></span>
+                            Application Rejected
+                        </div>
+                    ) : (
+                        <div className="status-badge pending">
+                            <span className="badge-dot"></span>
+                            Awaiting Admin Approval
+                        </div>
+                    )}
                 </div>
 
                 <div className="pending-details">
@@ -45,22 +57,40 @@ const Pending = () => {
                 </div>
 
                 <p className="pending-message">
-                    Your hospital registration is being reviewed by the
-                    <strong> Island MedEvac</strong> system administrator.
-                    You will be able to access the dashboard once approved.
+                    {isRejected ? (
+                        <>
+                            Your hospital registration has been <strong>rejected</strong> by the
+                            <strong> Island MedEvac</strong> administrator. Please review your details and resubmit.
+                        </>
+                    ) : (
+                        <>
+                            Your hospital registration is being reviewed by the
+                            <strong> Island MedEvac</strong> system administrator.
+                            You will be able to access the dashboard once approved.
+                        </>
+                    )}
                 </p>
 
                 <div className="pending-actions">
-                    <button className="refresh-btn" onClick={handleRefresh}>
-                        🔄 Check Status
-                    </button>
+                    {isRejected ? (
+                        <button className="refresh-btn resubmit" onClick={() => window.location.href = '/register'}>
+                            ✍️ Resubmit Application
+                        </button>
+                    ) : (
+                        <button className="refresh-btn" onClick={handleRefresh}>
+                            🔄 Check Status
+                        </button>
+                    )}
                     <button className="logout-btn" onClick={signOut}>
                         Sign Out
                     </button>
                 </div>
 
                 <p className="pending-note">
-                    You will receive email notification once approved
+                    {isRejected
+                        ? 'Contact support if you believe this was a mistake.'
+                        : 'You will receive email notification once approved'
+                    }
                 </p>
             </div>
         </div>

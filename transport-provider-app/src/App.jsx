@@ -20,6 +20,7 @@ function App() {
     const [loading, setLoading] = useState(true)
     const [needsOnboarding, setNeedsOnboarding] = useState(false)
     const [isVerified, setIsVerified] = useState(true)
+    const [isRejected, setIsRejected] = useState(false)
     const [companyName, setCompanyName] = useState('')
 
     useEffect(() => {
@@ -60,11 +61,13 @@ function App() {
             if (error || !data) {
                 setNeedsOnboarding(true)
                 setIsVerified(true) // Allow to complete onboarding
+                setIsRejected(false)
             } else {
                 setNeedsOnboarding(false)
                 setCompanyName(data.company_name)
                 // Check if verified and active
                 setIsVerified(data.is_verified && data.is_active)
+                setIsRejected(data.is_active === false)
             }
         } catch (err) {
             console.error('Error checking onboarding:', err)
@@ -96,17 +99,18 @@ function App() {
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="*" element={<Navigate to="/login" replace />} />
                     </>
-                ) : needsOnboarding ? (
+                ) : (needsOnboarding || isRejected) ? (
                     <>
                         <Route path="/onboarding" element={<OnboardingWizard onComplete={() => {
                             setNeedsOnboarding(false)
+                            setIsRejected(false)
                             checkOnboardingStatus(session.user.id)
                         }} />} />
                         <Route path="*" element={<Navigate to="/onboarding" replace />} />
                     </>
                 ) : !isVerified ? (
                     <>
-                        <Route path="/pending" element={<PendingApproval companyName={companyName} />} />
+                        <Route path="/pending" element={<PendingApproval companyName={companyName} isRejected={isRejected} />} />
                         <Route path="*" element={<Navigate to="/pending" replace />} />
                     </>
                 ) : (

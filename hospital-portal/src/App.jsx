@@ -63,7 +63,7 @@ function AppRoutes() {
       {/* Registration */}
       <Route path="/register" element={
         !user ? <Navigate to="/login" replace /> :
-          hospital ? <Navigate to="/" replace /> :
+          (hospital && hospital.status !== 'suspended') ? <Navigate to="/" replace /> :
             <Register />
       } />
 

@@ -172,6 +172,12 @@
     color: hsl(38, 95%, 60%);
 }
 
+.status-badge.rejected {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #ef4444;
+}
+
 .badge-dot {
     width: 8px;
     height: 8px;
@@ -253,6 +259,21 @@
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
+}
+
+.refresh-btn.resubmit {
+    background: #ef4444;
+    color: white;
+    border: none;
+}
+
+.refresh-btn.resubmit:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+}
+
+.pending-card.rejected {
+    border-top: 4px solid #ef4444;
 }
 
 .refresh-btn {

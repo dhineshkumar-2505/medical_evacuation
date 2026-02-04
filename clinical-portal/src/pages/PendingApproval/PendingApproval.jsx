@@ -17,15 +17,24 @@ export default function PendingApproval() {
                 <div className="orb orb-2"></div>
             </div>
 
-            <div className="pending-card">
+            <div className={`pending-card ${clinic?.status?.toLowerCase() === 'suspended' ? 'rejected' : ''}`}>
                 <div className="pending-icon">
-                    <Clock size={48} />
+                    {clinic?.status?.toLowerCase() === 'suspended' ? <XCircle size={48} /> : <Clock size={48} />}
                 </div>
 
-                <h1>Registration Under Review</h1>
+                <h1>{clinic?.status?.toLowerCase() === 'suspended' ? 'Registration Rejected' : 'Registration Under Review'}</h1>
                 <p className="pending-message">
-                    Your clinic <strong>"{clinic?.name}"</strong> registration has been submitted
-                    and is awaiting approval from Central Command.
+                    {clinic?.status?.toLowerCase() === 'suspended' ? (
+                        <>
+                            Your clinic <strong>"{clinic?.name}"</strong> registration has been <strong>rejected</strong> by Central Command.
+                            Please review your information and submit a new application.
+                        </>
+                    ) : (
+                        <>
+                            Your clinic <strong>"{clinic?.name}"</strong> registration has been submitted
+                            and is awaiting approval from Central Command.
+                        </>
+                    )}
                 </p>
 
                 <div className="pending-details">
@@ -41,15 +50,24 @@ export default function PendingApproval() {
                     </div>
                     <div className="detail-row">
                         <span className="label">Status</span>
-                        <span className="status-badge">Pending Approval</span>
+                        <span className="status-badge">
+                            {clinic?.status?.toLowerCase() === 'suspended' ? 'Rejected' : 'Pending Approval'}
+                        </span>
                     </div>
                 </div>
 
                 <div className="pending-actions">
-                    <button className="btn btn-primary" onClick={handleRefresh}>
-                        <RefreshCw size={18} />
-                        Check Status
-                    </button>
+                    {clinic?.status?.toLowerCase() === 'suspended' ? (
+                        <button className="btn btn-primary" onClick={() => window.location.href = '/register'}>
+                            <RefreshCw size={18} />
+                            Resubmit Registration
+                        </button>
+                    ) : (
+                        <button className="btn btn-primary" onClick={handleRefresh}>
+                            <RefreshCw size={18} />
+                            Check Status
+                        </button>
+                    )}
                     <button className="btn btn-ghost" onClick={signOut}>
                         <LogOut size={18} />
                         Sign Out
@@ -57,7 +75,10 @@ export default function PendingApproval() {
                 </div>
 
                 <p className="pending-note">
-                    You will be able to access the Clinical Portal once your registration is approved.
+                    {clinic?.status === 'suspended'
+                        ? 'Contact Central Command if you have any questions regarding your rejection.'
+                        : 'You will be able to access the Clinical Portal once your registration is approved.'
+                    }
                 </p>
             </div>
         </div>

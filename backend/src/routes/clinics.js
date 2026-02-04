@@ -75,7 +75,7 @@ router.post('/', authMiddleware, async (req, res) => {
 
         const { data, error } = await supabase
             .from('clinics')
-            .insert([{
+            .upsert([{
                 name,
                 location_name,
                 region_type,
@@ -84,7 +84,7 @@ router.post('/', authMiddleware, async (req, res) => {
                 admin_id: req.user.id,
                 admin_email: req.user.email,
                 status: 'pending_approval'
-            }])
+            }], { onConflict: 'admin_id' })
             .select()
             .single();
 
