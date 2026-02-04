@@ -155,7 +155,7 @@ export function AuthProvider({ children }) {
                     ...hospitalData,
                     admin_id: user.id,
                     admin_email: user.email,
-                    status: 'active', // Auto-activate for testing/demo
+                    status: 'pending_approval', // Enforce admin approval
                 }])
                 .select()
                 .single();

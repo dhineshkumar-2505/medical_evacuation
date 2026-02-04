@@ -67,7 +67,9 @@ export const getStatusColor = (status) => {
 
 // Generate invitation link
 export const generateInvitationLink = (token) => {
-    return `http://localhost:5178/register?token=${token}`
+    // Use production URL or environment variable
+    const baseUrl = import.meta.env.VITE_DRIVER_APP_URL || 'https://island-driver-app.vercel.app'
+    return `${baseUrl}/register?token=${token}`
 }
 
 // Copy to clipboard
