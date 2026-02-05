@@ -85,7 +85,7 @@ export function AuthProvider({ children }) {
                 console.error('Auth init error:', err);
             } finally {
                 if (active) {
-                    console.log('Auth initialized. User:', !!session?.user, 'Profile:', !!profile, 'Clinic:', !!clinicData);
+                    console.log('Auth initialized. User:', !!user, 'Profile:', !!profile, 'Clinic:', !!clinic);
                     setLoading(false);
                     setInitialized(true);
                 }
