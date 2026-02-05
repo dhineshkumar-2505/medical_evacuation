@@ -1,4 +1,6 @@
 import { Clock, XCircle, CheckCircle } from 'lucide-react';
+import './PendingApproval.css';
+
 
 export default function PendingApproval({ companyName, isRejected }) {
     return (
