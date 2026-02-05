@@ -114,11 +114,11 @@ export default function PatientRecords() {
             </div>
 
             {/* Risk Score Summary */}
-            {vitalsHistory.length > 0 && (
+            {patient.risk_score != null && (
                 <div className="risk-summary-bar">
                     <div className="risk-info">
                         <span className="risk-label">Current Risk Score</span>
-                        <span className={`risk-value ${getStatusClass(analysis.status)}`}>{analysis.riskScore}/100</span>
+                        <span className={`risk-value ${getStatusClass(analysis.status)}`}>{patient.risk_score}/100</span>
                     </div>
                     <div className="risk-explanation">{analysis.explanation}</div>
                 </div>
