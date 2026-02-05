@@ -78,6 +78,7 @@ router.post('/', authMiddleware, async (req, res) => {
             .upsert([{
                 name,
                 location_name,
+                operating_location: location_name, // Map to operating_location
                 region_type,
                 facility_level,
                 contact_phone,
