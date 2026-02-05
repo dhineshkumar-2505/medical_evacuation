@@ -38,7 +38,7 @@ const LoadingScreen = () => (
 
 // Single router component that handles all auth states
 function AppRouter() {
-  const { user, loading, initialized, hasClinic, isClinicApproved, isClinicPending } = useAuth();
+  const { user, loading, initialized, hasClinic, isClinicApproved, isClinicPending, isClinicRejected } = useAuth();
 
   // Only show loading on first initialization
   if (!initialized || loading) {
