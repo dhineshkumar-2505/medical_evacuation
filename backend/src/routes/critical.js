@@ -32,44 +32,67 @@ router.get('/hospitals/:region', async (req, res) => {
 router.get('/nearby/:clinicId', async (req, res) => {
     try {
         const { clinicId } = req.params;
+        console.log(`\n========== NEARBY HOSPITAL DEBUG ==========`);
+        console.log(`[NEARBY] Clinic ID: ${clinicId}`);
 
-        // 1. Get clinic's region
+        // 1. Get clinic's operating location
         const { data: clinic, error: clinicError } = await supabase
             .from('clinics')
-            .select('id, name, region')
+            .select('id, name, operating_location')
             .eq('id', clinicId)
             .single();
 
-        if (clinicError) throw clinicError;
+        if (clinicError) {
+            console.log(`[NEARBY] ❌ Clinic Error:`, clinicError);
+            throw clinicError;
+        }
+        console.log(`[NEARBY] ✅ Clinic: ${clinic?.name}`);
+        console.log(`[NEARBY] ✅ Operating Location: "${clinic?.operating_location}"`);
 
-        // 2. Get target region from mapping
-        const { data: mapping } = await supabase
+        // 2. Get ALL target regions from mappings (may have multiple)
+        // e.g., Havelock Island → [Chennai, Puducherry]
+        const { data: mappings, error: mapError } = await supabase
             .from('region_mappings')
             .select('target_region')
-            .eq('origin_region', clinic.region)
-            .single();
+            .eq('origin_region', clinic.operating_location);
 
-        // If no mapping, use same region
-        const targetRegion = mapping?.target_region || clinic.region;
+        if (mapError) {
+            console.log(`[NEARBY] ❌ Mapping Error:`, mapError);
+        }
+        console.log(`[NEARBY] ✅ Mappings found: ${mappings?.length || 0}`, mappings);
 
-        // 3. Get all active hospitals in target region
+        // Extract all target regions, or use clinic location if no mappings
+        const targetRegions = mappings && mappings.length > 0
+            ? mappings.map(m => m.target_region)
+            : [clinic.operating_location];
+
+        console.log(`[NEARBY] ✅ Target Regions:`, targetRegions);
+
+        // 3. Get all active hospitals in ANY of the target regions
+        // NOTE: Hospitals use 'region' field, NOT 'operating_location'
         const { data: hospitals, error: hospError } = await supabase
             .from('hospitals')
-            .select('id, name, city, facility_type, contact_phone, region')
-            .eq('region', targetRegion)
+            .select('id, name, city, facility_type, contact_phone, region, status')
+            .in('region', targetRegions)  // ✅ Query multiple regions
             .eq('status', 'active')
             .order('name');
 
-        if (hospError) throw hospError;
+        if (hospError) {
+            console.log(`[NEARBY] ❌ Hospital Query Error:`, hospError);
+            throw hospError;
+        }
+        console.log(`[NEARBY] ✅ Hospitals found: ${hospitals?.length || 0}`);
+        hospitals?.forEach(h => console.log(`   - ${h.name} (${h.region}, ${h.status})`));
+        console.log(`============================================\n`);
 
         res.json({
             success: true,
             clinic: clinic,
-            targetRegion: targetRegion,
+            targetRegions: targetRegions,  // Array of regions
             hospitals: hospitals || []
         });
     } catch (error) {
-        console.error('Error fetching nearby hospitals:', error);
+        console.error('[NEARBY] ❌ Error fetching nearby hospitals:', error);
         res.status(500).json({ success: false, error: error.message });
     }
 });
@@ -227,29 +250,110 @@ router.post('/acknowledge/:id', async (req, res) => {
 router.get('/hospital/:hospitalId', async (req, res) => {
     try {
         const { hospitalId } = req.params;
-        const { status } = req.query;
 
-        let query = supabase
+        const { data: cases, error } = await supabase
             .from('critical_cases')
             .select(`
                 *,
-                patient:patients(id, name, patient_id, age, gender, blood_type, is_critical),
-                clinic:clinics(id, name, region)
+                clinic:clinic_id (id, name, operating_location),
+                patient:patient_id (
+                    id, patient_id, name, age, gender,
+                    heart_rate, blood_pressure, oxygen_saturation,
+                    temperature, respiratory_rate, risk_score
+                )
             `)
             .eq('target_hospital_id', hospitalId)
+            .neq('status', 'closed')
             .order('shared_at', { ascending: false });
-
-        if (status) {
-            query = query.eq('status', status);
-        }
-
-        const { data, error } = await query;
 
         if (error) throw error;
 
-        console.log(`📋 Fetched ${data?.length || 0} critical cases for Hospital ${hospitalId}`);
+        const casesWithRisk = (cases || []).map(c => {
+            // If risk_score already set in DB, use it
+            if (c.patient?.risk_score) {
+                return { ...c, risk_score: c.patient.risk_score };
+            }
 
-        res.json({ success: true, cases: data || [] });
+            // Calculate NEWS2 (National Early Warning Score 2) - NHS Clinical Standard
+            // Reference: https://www.england.nhs.uk/ourwork/clinical-policy/sepsis/nationalearlywarningscore/
+            const p = c.patient || {};
+            let news2Score = 0;
+
+            // === RESPIRATION RATE (breaths/min) ===
+            // NEWS2 Chart: ≤8 = 3, 9-11 = 1, 12-20 = 0, 21-24 = 2, ≥25 = 3
+            if (p.respiratory_rate) {
+                const rr = p.respiratory_rate;
+                if (rr <= 8) news2Score += 3;
+                else if (rr >= 9 && rr <= 11) news2Score += 1;
+                else if (rr >= 12 && rr <= 20) news2Score += 0;
+                else if (rr >= 21 && rr <= 24) news2Score += 2;
+                else if (rr >= 25) news2Score += 3;
+            }
+
+            // === OXYGEN SATURATION (SpO2 %) ===
+            // NEWS2 Scale 1: ≤91 = 3, 92-93 = 2, 94-95 = 1, ≥96 = 0
+            if (p.oxygen_saturation) {
+                const spo2 = p.oxygen_saturation;
+                if (spo2 <= 91) news2Score += 3;
+                else if (spo2 >= 92 && spo2 <= 93) news2Score += 2;
+                else if (spo2 >= 94 && spo2 <= 95) news2Score += 1;
+                else if (spo2 >= 96) news2Score += 0;
+            }
+
+            // === SYSTOLIC BLOOD PRESSURE (mmHg) ===
+            // NEWS2: ≤90 = 3, 91-100 = 2, 101-110 = 1, 111-219 = 0, ≥220 = 3
+            if (p.blood_pressure) {
+                const systolic = parseInt(p.blood_pressure.split('/')[0]) || 0;
+                if (systolic <= 90) news2Score += 3;
+                else if (systolic >= 91 && systolic <= 100) news2Score += 2;
+                else if (systolic >= 101 && systolic <= 110) news2Score += 1;
+                else if (systolic >= 111 && systolic <= 219) news2Score += 0;
+                else if (systolic >= 220) news2Score += 3;
+            }
+
+            // === HEART RATE (bpm) ===
+            // NEWS2: ≤40 = 3, 41-50 = 1, 51-90 = 0, 91-110 = 1, 111-130 = 2, ≥131 = 3
+            if (p.heart_rate) {
+                const hr = p.heart_rate;
+                if (hr <= 40) news2Score += 3;
+                else if (hr >= 41 && hr <= 50) news2Score += 1;
+                else if (hr >= 51 && hr <= 90) news2Score += 0;
+                else if (hr >= 91 && hr <= 110) news2Score += 1;
+                else if (hr >= 111 && hr <= 130) news2Score += 2;
+                else if (hr >= 131) news2Score += 3;
+            }
+
+            // === TEMPERATURE (°C) ===
+            // NEWS2: ≤35.0 = 3, 35.1-36.0 = 1, 36.1-38.0 = 0, 38.1-39.0 = 1, ≥39.1 = 2
+            if (p.temperature) {
+                const temp = parseFloat(p.temperature);
+                if (temp <= 35.0) news2Score += 3;
+                else if (temp >= 35.1 && temp <= 36.0) news2Score += 1;
+                else if (temp >= 36.1 && temp <= 38.0) news2Score += 0;
+                else if (temp >= 38.1 && temp <= 39.0) news2Score += 1;
+                else if (temp >= 39.1) news2Score += 2;
+            }
+
+            // NEWS2 total can be 0-20. Map to 0-100 scale for system consistency
+            // NEWS2 Clinical Response Thresholds:
+            //   0 = Low risk, 1-4 = Low-Medium, 5-6 = Medium (urgent response), 7+ = High (emergency)
+            // Mapping to 0-100: NEWS2 0 → 10, 1-4 → 20-50, 5-6 → 60-70, 7+ → 80-100
+            let riskScore;
+            if (news2Score === 0) riskScore = 10;
+            else if (news2Score <= 4) riskScore = 20 + (news2Score * 7); // 27-48
+            else if (news2Score <= 6) riskScore = 50 + (news2Score * 3); // 65-68
+            else riskScore = Math.min(70 + (news2Score * 4), 100); // 98-100
+
+            return { ...c, risk_score: riskScore, news2_raw: news2Score };
+        });
+
+        casesWithRisk.sort((a, b) => {
+            if (b.risk_score !== a.risk_score) return b.risk_score - a.risk_score;
+            return new Date(b.shared_at) - new Date(a.shared_at);
+        });
+
+        console.log(`📋 Fetched ${casesWithRisk.length} cases for hospital ${hospitalId}`);
+        res.json({ success: true, cases: casesWithRisk });
     } catch (error) {
         console.error('Error fetching hospital cases:', error);
         res.status(500).json({ success: false, error: error.message });
@@ -348,3 +452,4 @@ router.get('/patient/:patientId', async (req, res) => {
 });
 
 export default router;
+

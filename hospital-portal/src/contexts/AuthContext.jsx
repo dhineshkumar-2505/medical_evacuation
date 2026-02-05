@@ -153,6 +153,7 @@ export function AuthProvider({ children }) {
                 .from('hospitals')
                 .upsert([{
                     ...hospitalData,
+                    operating_location: hospitalData.region, // Auto-populate from region
                     admin_id: user.id,
                     admin_email: user.email,
                     status: 'pending_approval', // Reset to pending on resubmission

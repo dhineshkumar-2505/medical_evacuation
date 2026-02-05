@@ -454,3 +454,50 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* ============================================ */
+/* PHASE 3: Risk Badge Mini Styles */
+/* ============================================ */
+.risk-badge-mini {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.risk-badge-mini.risk-critical {
+    background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+    box-shadow: 0 2px 8px rgba(255, 68, 68, 0.4);
+    animation: pulse-critical 2s infinite;
+}
+
+.risk-badge-mini.risk-high {
+    background: linear-gradient(135deg, #ff9944 0%, #ff7700 100%);
+    box-shadow: 0 2px 8px rgba(255, 153, 68, 0.4);
+}
+
+.risk-badge-mini.risk-medium {
+    background: linear-gradient(135deg, #ffdd44 0%, #ffbb00 100%);
+    box-shadow: 0 2px 8px rgba(255, 221, 68, 0.4);
+}
+
+.risk-badge-mini.risk-low {
+    background: linear-gradient(135deg, #44ff88 0%, #00cc44 100%);
+    box-shadow: 0 2px 8px rgba(68, 255, 136, 0.4);
+}
+
+@keyframes pulse-critical {
+
+    0%,
+    100% {
+        box-shadow: 0 2px 8px rgba(255, 68, 68, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 4px 16px rgba(255, 68, 68, 0.8);
+    }
+}

@@ -26,8 +26,14 @@ const Dashboard = () => {
 
             if (criticalData.success) {
                 const cases = criticalData.cases || [];
-                // Sort by shared_at desc
-                cases.sort((a, b) => new Date(b.shared_at) - new Date(a.shared_at));
+
+                // Sort by Risk Score (highest first), then by Date (newest first)
+                cases.sort((a, b) => {
+                    const riskA = a.risk_score || 0;
+                    const riskB = b.risk_score || 0;
+                    if (riskB !== riskA) return riskB - riskA;
+                    return new Date(b.shared_at) - new Date(a.shared_at);
+                });
 
                 setCriticalCases(cases);
                 const criticalPending = cases.filter(c => c.status === 'shared').length || 0;
@@ -63,6 +69,14 @@ const Dashboard = () => {
 
     // Top 5 recent cases
     const recentCases = criticalCases.slice(0, 5);
+
+    // Risk badge helper (0-100 scale)
+    const getRiskBadge = (riskScore) => {
+        if (riskScore >= 80) return { class: 'risk-critical', label: 'Critical', emoji: '🔴' };
+        if (riskScore >= 60) return { class: 'risk-high', label: 'High', emoji: '🟠' };
+        if (riskScore >= 30) return { class: 'risk-medium', label: 'Medium', emoji: '🟡' };
+        return { class: 'risk-low', label: 'Low', emoji: '🟢' };
+    };
 
     return (
         <div className="dashboard-premium">
@@ -141,9 +155,9 @@ const Dashboard = () => {
                                             From {caseItem.clinic?.name || 'Clinic'} • {caseItem.status}
                                         </span>
                                     </div>
-                                    <button className="view-btn-small">
-                                        <span>👁️</span>
-                                    </button>
+                                    <span className={`risk-badge-mini ${getRiskBadge(caseItem.risk_score).class}`}>
+                                        {getRiskBadge(caseItem.risk_score).emoji}
+                                    </span>
                                 </div>
                             ))
                         )}

@@ -209,10 +209,25 @@ router.post('/', clinicAuth, async (req, res) => {
         // Calculate Risk Score (Matching Frontend Logic)
         const { score, alerts } = calculateRiskScore(vitalsData);
 
-        // Critical Threshold (from frontend logic: >= 50 is Critical)
-        const CRITICAL_SCORE_THRESHOLD = 50;
+        // Critical Threshold: NEWS2-aligned (≥60 = High Risk requiring urgent response)
+        const CRITICAL_SCORE_THRESHOLD = 60;
 
+        console.log(`[POST /vitals] ========================================`);
         console.log(`[POST /vitals] Patient ${patient_id} Risk Score: ${score}/100`);
+        console.log(`[POST /vitals] Alerts: ${alerts.join(', ')}`);
+
+        // Update patient's risk_score in database
+        console.log(`[POST /vitals] 🔄 Updating risk_score to ${score}...`);
+        const { error: scoreUpdateError } = await supabase
+            .from('patients')
+            .update({ risk_score: score })
+            .eq('id', patient_id);
+
+        if (scoreUpdateError) {
+            console.error(`[POST /vitals] ❌ Failed to update risk_score:`, scoreUpdateError);
+        } else {
+            console.log(`[POST /vitals] ✅ Risk score updated successfully`);
+        }
 
         let isCriticalUpdate = false;
 
@@ -229,10 +244,12 @@ router.post('/', clinicAuth, async (req, res) => {
                 console.error(`[POST /vitals] ❌ Failed to update patient as critical:`, updateError);
             } else {
                 isCriticalUpdate = true;
-                console.log(`[POST /vitals] ✅ Patient ${patient_id} marked as critical`);
+                console.log(`[POST /vitals] ✅ Patient ${patient_id} marked as critical (is_critical=true)`);
             }
+        }
 
-            // Emit critical alert with score
+        // Emit critical alert with score (only if critical)
+        if (score >= CRITICAL_SCORE_THRESHOLD) {
             req.io?.emit('vitals:critical', {
                 patientId: patient_id,
                 vitals: data,

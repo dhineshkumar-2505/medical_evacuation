@@ -22,7 +22,18 @@ const CriticalCases = () => {
             const criticalData = await criticalRes.json();
 
             if (criticalData.success) {
-                setCriticalCases(criticalData.cases || []);
+                console.log('📥 Received critical cases:', criticalData.cases);
+
+                // Force sort in frontend to guarantee order: Risk (Desc) -> Date (Desc)
+                const sortedCases = [...(criticalData.cases || [])].sort((a, b) => {
+                    const riskA = a.risk_score || 0;
+                    const riskB = b.risk_score || 0;
+
+                    if (riskB !== riskA) return riskB - riskA; // Higher risk first
+                    return new Date(b.shared_at) - new Date(a.shared_at); // Newer first
+                });
+
+                setCriticalCases(sortedCases);
             }
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -56,6 +67,26 @@ const CriticalCases = () => {
             caseItem.patient?.patient_id?.toLowerCase().includes(searchQuery.toLowerCase());
         return matchesSearch;
     });
+
+    // Group cases by date
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const todayCases = filteredCases.filter(c => new Date(c.shared_at) >= today);
+    const yesterdayCases = filteredCases.filter(c => {
+        const date = new Date(c.shared_at);
+        return date >= yesterday && date < today;
+    });
+    const olderCases = filteredCases.filter(c => new Date(c.shared_at) < yesterday);
+
+    const getRiskBadge = (riskScore) => {
+        if (riskScore >= 80) return { class: 'risk-critical', label: 'Critical', emoji: '🔴' };
+        if (riskScore >= 60) return { class: 'risk-high', label: 'High', emoji: '🟠' };
+        if (riskScore >= 30) return { class: 'risk-medium', label: 'Medium', emoji: '🟡' };
+        return { class: 'risk-low', label: 'Low', emoji: '🟢' };
+    };
 
     const getStatusBadge = (status) => {
         const badges = {
@@ -101,54 +132,93 @@ const CriticalCases = () => {
                         </p>
                     </div>
                 ) : (
-                    <div className="table-wrapper">
-                        <table className="premium-table">
-                            <thead>
-                                <tr>
-                                    <th>Patient</th>
-                                    <th>From Clinic</th>
-                                    <th>Location</th>
-                                    <th>Age / Gender</th>
-                                    <th>Shared At</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filteredCases.map((caseItem) => (
-                                    <tr key={caseItem.id} className="table-row-premium">
-                                        <td>
-                                            <div className="patient-cell">
-                                                <div className="patient-avatar-table">
-                                                    {caseItem.patient?.name?.charAt(0) || 'P'}
+                    <div className="segmented-cases-container">
+                        {todayCases.length > 0 && (
+                            <div className="date-section">
+                                <h3 className="date-section-title">📅 Today ({todayCases.length})</h3>
+                                <div className="cases-grid">
+                                    {todayCases.map((caseItem) => (
+                                        <div key={caseItem.id} className="case-card" onClick={() => navigate(`/case/${caseItem.id}`)}>
+                                            <div className="case-card-header">
+                                                <div className="patient-info">
+                                                    <div className="patient-avatar">{caseItem.patient?.name?.charAt(0) || 'P'}</div>
+                                                    <div>
+                                                        <div className="patient-name">{caseItem.patient?.name || 'Unknown'}</div>
+                                                        <div className="patient-id">{caseItem.patient?.patient_id}</div>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <div className="patient-name-table">{caseItem.patient?.name || 'Unknown'}</div>
-                                                    <div className="patient-id-table">{caseItem.patient?.patient_id}</div>
-                                                </div>
+                                                <span className={`risk-badge ${getRiskBadge(caseItem.risk_score).class}`}>
+                                                    {getRiskBadge(caseItem.risk_score).emoji} {getRiskBadge(caseItem.risk_score).label} ({caseItem.risk_score || 0})
+                                                </span>
                                             </div>
-                                        </td>
-                                        <td>{caseItem.clinic?.name || 'N/A'}</td>
-                                        <td>{caseItem.clinic?.operating_location || 'N/A'}</td>
-                                        <td>{caseItem.patient?.age} yrs / {caseItem.patient?.gender}</td>
-                                        <td>{new Date(caseItem.shared_at).toLocaleString()}</td>
-                                        <td>
-                                            <span className={`status-badge-table ${getStatusBadge(caseItem.status).class}`}>
-                                                {getStatusBadge(caseItem.status).label}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <button
-                                                className="btn btn-sm btn-primary"
-                                                onClick={() => navigate(`/case/${caseItem.id}`)}
-                                            >
-                                                View Details
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                            <div className="case-card-body">
+                                                <div className="case-detail">🏥 {caseItem.clinic?.name}</div>
+                                                <div className="case-detail">📍 {caseItem.clinic?.operating_location}</div>
+                                                <div className="case-detail">⏰ {new Date(caseItem.shared_at).toLocaleTimeString()}</div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {yesterdayCases.length > 0 && (
+                            <div className="date-section">
+                                <h3 className="date-section-title">📅 Yesterday ({yesterdayCases.length})</h3>
+                                <div className="cases-grid">
+                                    {yesterdayCases.map((caseItem) => (
+                                        <div key={caseItem.id} className="case-card" onClick={() => navigate(`/case/${caseItem.id}`)}>
+                                            <div className="case-card-header">
+                                                <div className="patient-info">
+                                                    <div className="patient-avatar">{caseItem.patient?.name?.charAt(0) || 'P'}</div>
+                                                    <div>
+                                                        <div className="patient-name">{caseItem.patient?.name || 'Unknown'}</div>
+                                                        <div className="patient-id">{caseItem.patient?.patient_id}</div>
+                                                    </div>
+                                                </div>
+                                                <span className={`risk-badge ${getRiskBadge(caseItem.risk_score).class}`}>
+                                                    {getRiskBadge(caseItem.risk_score).emoji} {getRiskBadge(caseItem.risk_score).label} ({caseItem.risk_score || 0})
+                                                </span>
+                                            </div>
+                                            <div className="case-card-body">
+                                                <div className="case-detail">🏥 {caseItem.clinic?.name}</div>
+                                                <div className="case-detail">📍 {caseItem.clinic?.operating_location}</div>
+                                                <div className="case-detail">⏰ {new Date(caseItem.shared_at).toLocaleString()}</div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {olderCases.length > 0 && (
+                            <div className="date-section">
+                                <h3 className="date-section-title">📅 Older ({olderCases.length})</h3>
+                                <div className="cases-grid">
+                                    {olderCases.map((caseItem) => (
+                                        <div key={caseItem.id} className="case-card" onClick={() => navigate(`/case/${caseItem.id}`)}>
+                                            <div className="case-card-header">
+                                                <div className="patient-info">
+                                                    <div className="patient-avatar">{caseItem.patient?.name?.charAt(0) || 'P'}</div>
+                                                    <div>
+                                                        <div className="patient-name">{caseItem.patient?.name || 'Unknown'}</div>
+                                                        <div className="patient-id">{caseItem.patient?.patient_id}</div>
+                                                    </div>
+                                                </div>
+                                                <span className={`risk-badge ${getRiskBadge(caseItem.risk_score).class}`}>
+                                                    {getRiskBadge(caseItem.risk_score).emoji} {getRiskBadge(caseItem.risk_score).label} ({caseItem.risk_score || 0})
+                                                </span>
+                                            </div>
+                                            <div className="case-card-body">
+                                                <div className="case-detail">🏥 {caseItem.clinic?.name}</div>
+                                                <div className="case-detail">📍 {caseItem.clinic?.operating_location}</div>
+                                                <div className="case-detail">⏰ {new Date(caseItem.shared_at).toLocaleDateString()}</div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>

@@ -54,7 +54,6 @@
     position: relative;
 }
 
-/* Top shine effect */
 .data-table-premium::before {
     content: '';
     position: absolute;
@@ -146,152 +145,163 @@
     font-size: var(--font-size-sm);
 }
 
-/* Table */
-.table-wrapper {
-    overflow-x: auto;
+/* ============================================ */
+/* PHASE 3: Risk Score & Date Segregation */
+/* ============================================ */
+
+/* Risk Score Badges */
+.risk-badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
 }
 
-.premium-table {
-    width: 100%;
-    border-collapse: collapse;
+.risk-critical {
+    background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(255, 68, 68, 0.3);
 }
 
-.premium-table th,
-.premium-table td {
-    padding: var(--space-4) var(--space-6);
-    text-align: left;
+.risk-high {
+    background: linear-gradient(135deg, #ff9944 0%, #ff7700 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(255, 153, 68, 0.3);
 }
 
-.premium-table th {
-    background: var(--glass-bg-subtle);
-    font-size: 11px;
-    font-weight: var(--font-weight-bold);
-    color: var(--color-text-secondary);
-    text-transform: uppercase;
-    letter-spacing: var(--letter-spacing-wider);
-    border-bottom: 1px solid var(--color-border-subtle);
+.risk-medium {
+    background: linear-gradient(135deg, #ffdd44 0%, #ffbb00 100%);
+    color: #333;
+    box-shadow: 0 2px 8px rgba(255, 221, 68, 0.3);
 }
 
-.premium-table td {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-primary);
-    border-bottom: 1px solid var(--color-border-subtle);
+.risk-low {
+    background: linear-gradient(135deg, #44ff88 0%, #00cc44 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(68, 255, 136, 0.3);
 }
 
-.premium-table tbody tr {
-    transition: all var(--transition-fast);
+/* Date Segregation Container */
+.segmented-cases-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: var(--space-6);
 }
 
-.premium-table tbody tr:hover {
-    background: hsla(170, 75%, 48%, 0.04);
+.date-section {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.premium-table tbody tr:last-child td {
-    border-bottom: none;
-}
-
-/* Patient Cell */
-.patient-cell {
+.date-section-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 1rem;
     display: flex;
     align-items: center;
-    gap: var(--space-3);
+    gap: 0.5rem;
 }
 
-.patient-avatar-table {
+/* Cases Grid */
+.cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1rem;
+}
+
+.case-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.case-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border-color: rgba(147, 51, 234, 0.5);
+    background: linear-gradient(135deg, rgba(147, 51, 234, 0.08) 0%, rgba(79, 70, 229, 0.05) 100%);
+}
+
+.case-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+    gap: 1rem;
+}
+
+.patient-info {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+}
+
+.patient-avatar {
     width: 40px;
     height: 40px;
-    background: var(--gradient-accent);
+    border-radius: 50%;
+    background: linear-gradient(135deg, #9333ea 0%, #4f46e5 100%);
     color: white;
-    border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: var(--font-weight-bold);
+    font-weight: 700;
     font-size: 16px;
-    box-shadow: var(--shadow-sm), var(--shadow-glow-accent);
+    flex-shrink: 0;
 }
 
-.patient-name-table {
-    font-weight: var(--font-weight-semibold);
+.patient-name {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.patient-id-table {
-    font-family: var(--font-family-display);
+.patient-id {
     font-size: 12px;
-    color: var(--color-text-muted);
+    color: #64748b;
+    font-family: monospace;
 }
 
-/* Status Badge - Premium */
-.status-badge-table {
-    display: inline-flex;
+.case-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.case-detail {
+    font-size: 13px;
+    color: #475569;
+    display: flex;
     align-items: center;
-    gap: var(--space-1);
-    padding: 4px 12px;
-    border-radius: var(--radius-full);
-    font-size: 11px;
-    font-weight: var(--font-weight-bold);
-    text-transform: uppercase;
-    letter-spacing: var(--letter-spacing-wide);
-    backdrop-filter: blur(8px);
+    gap: 0.5rem;
 }
 
-.status-badge-table.badge-warning {
-    background: linear-gradient(135deg, hsla(38, 95%, 50%, 0.15), hsla(38, 95%, 50%, 0.1));
-    color: hsl(38, 80%, 35%);
-    border: 1px solid hsla(38, 95%, 50%, 0.2);
-}
+@media (max-width: 768px) {
+    .cases-grid {
+        grid-template-columns: 1fr;
+    }
 
-.status-badge-table.badge-success {
-    background: linear-gradient(135deg, hsla(152, 70%, 42%, 0.15), hsla(152, 70%, 42%, 0.1));
-    color: var(--color-success);
-    border: 1px solid hsla(152, 70%, 42%, 0.2);
-}
-
-.status-badge-table.badge-default {
-    background: var(--glass-bg);
-    color: var(--color-neutral-600);
-    border: 1px solid var(--color-border);
-}
-
-.status-badge-table.badge-danger {
-    background: linear-gradient(135deg, hsla(0, 80%, 58%, 0.15), hsla(0, 80%, 58%, 0.1));
-    color: var(--color-danger);
-    border: 1px solid hsla(0, 80%, 58%, 0.2);
-}
-
-/* Action Buttons */
-.action-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-2) var(--space-4);
-    border-radius: var(--radius-lg);
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-semibold);
-    transition: all var(--transition-fast);
-    cursor: pointer;
-    border: none;
-    text-decoration: none;
-}
-
-.action-btn-primary {
-    background: var(--gradient-accent);
-    color: white;
-    box-shadow: var(--shadow-sm);
-}
-
-.action-btn-primary:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-md), var(--shadow-glow-accent);
-}
-
-.action-btn-secondary {
-    background: var(--glass-bg);
-    color: var(--color-text-secondary);
-    border: 1px solid var(--glass-border);
-}
-
-.action-btn-secondary:hover {
-    background: var(--glass-bg-strong);
-    color: var(--color-text-primary);
+    .segmented-cases-container {
+        padding: var(--space-4);
+    }
 }
