@@ -1,3 +1,5 @@
+import { Clock, XCircle, CheckCircle } from 'lucide-react';
+
 export default function PendingApproval({ companyName, isRejected }) {
     return (
         <div className={`pending-approval-page ${isRejected ? 'rejected' : ''}`}>
