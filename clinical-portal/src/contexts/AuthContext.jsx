@@ -85,6 +85,7 @@ export function AuthProvider({ children }) {
                 console.error('Auth init error:', err);
             } finally {
                 if (active) {
+                    console.log('Auth initialized. User:', !!session?.user, 'Profile:', !!profile, 'Clinic:', !!clinicData);
                     setLoading(false);
                     setInitialized(true);
                 }
@@ -102,6 +103,7 @@ export function AuthProvider({ children }) {
                         setClinic(null);
                     }
                 } else if (event === 'SIGNED_IN' && session) {
+                    console.log('Auth SIGNED_IN event triggered');
                     // Re-run init if user changed or we were null
                     if (active && (!user || user.id !== session.user.id)) {
                         setLoading(true);

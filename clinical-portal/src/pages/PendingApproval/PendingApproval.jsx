@@ -1,5 +1,5 @@
 import { useAuth } from '../../contexts/AuthContext';
-import { Clock, RefreshCw, LogOut } from 'lucide-react';
+import { Clock, RefreshCw, LogOut, XCircle } from 'lucide-react';
 import './PendingApproval.css';
 
 export default function PendingApproval() {

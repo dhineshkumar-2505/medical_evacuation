@@ -203,3 +203,30 @@
     color: rgba(255, 255, 255, 0.4);
     margin: 0;
 }
+
+/* Rejected State Styling */
+.pending-card.rejected::before {
+    background: linear-gradient(90deg, transparent, #ef4444, #b91c1c, transparent);
+}
+
+.pending-card.rejected .pending-icon {
+    background: linear-gradient(135deg, #ef4444, #b91c1c);
+    box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
+    animation: shake 0.5s ease-in-out;
+}
+
+.pending-card.rejected .status-badge {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #f87171;
+}
+
+.pending-card.rejected .pending-message strong {
+    color: #f87171;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}

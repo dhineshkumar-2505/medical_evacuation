@@ -70,12 +70,8 @@ function AppRouter() {
         <Route path="/" element={
           !user ? <Navigate to="/login" replace /> :
             !hasClinic ? <Navigate to="/register" replace /> :
-              isClinicPending ? <Navigate to="/pending" replace /> :
-                isClinicApproved ? <AppLayout /> :
-                  <div style={{ padding: 40, textAlign: 'center' }}>
-                    <h2>Access Denied</h2>
-                    <p>Your clinic has been suspended.</p>
-                  </div>
+              !isClinicApproved ? <Navigate to="/pending" replace /> :
+                <AppLayout />
         }>
           <Route index element={<Dashboard />} />
           <Route path="patients" element={<Patients />} />

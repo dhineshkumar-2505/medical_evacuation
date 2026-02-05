@@ -21,7 +21,12 @@ export default function Login() {
 
     // Only redirect if user AND profile are set (full validation done)
     if (user && profile) {
+        console.log('Login page: User and profile present, redirecting to /');
         return <Navigate to="/" replace />;
+    }
+
+    if (user && !profile) {
+        console.log('Login page: User present but profile missing. Waiting for AuthContext...');
     }
 
     const handleGoogleSignIn = async () => {
