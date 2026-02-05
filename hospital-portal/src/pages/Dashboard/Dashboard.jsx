@@ -155,9 +155,12 @@ const Dashboard = () => {
                                             From {caseItem.clinic?.name || 'Clinic'} • {caseItem.status}
                                         </span>
                                     </div>
-                                    <span className={`risk-badge-mini ${getRiskBadge(caseItem.risk_score).class}`}>
-                                        {getRiskBadge(caseItem.risk_score).emoji}
-                                    </span>
+                                    <div className="risk-score-display">
+                                        <span className={`risk-badge-mini ${getRiskBadge(caseItem.risk_score).class}`}>
+                                            {getRiskBadge(caseItem.risk_score).emoji}
+                                        </span>
+                                        <span className="risk-score-number">{caseItem.risk_score || 0}</span>
+                                    </div>
                                 </div>
                             ))
                         )}
