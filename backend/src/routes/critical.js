@@ -4,6 +4,97 @@ import { supabase } from '../config/supabase.js';
 const router = Router();
 
 // ============================================================================
+// Helper: Calculate NEWS2 Risk Score from Vitals
+// ============================================================================
+function calculateNEWS2Score(vitals) {
+    let news2Score = 0;
+
+    // Respiration Rate
+    if (vitals.respiratory_rate) {
+        const rr = vitals.respiratory_rate;
+        if (rr <= 8) news2Score += 3;
+        else if (rr >= 9 && rr <= 11) news2Score += 1;
+        else if (rr >= 21 && rr <= 24) news2Score += 2;
+        else if (rr >= 25) news2Score += 3;
+    }
+
+    // Oxygen Saturation
+    if (vitals.oxygen_saturation) {
+        const spo2 = vitals.oxygen_saturation;
+        if (spo2 <= 91) news2Score += 3;
+        else if (spo2 >= 92 && spo2 <= 93) news2Score += 2;
+        else if (spo2 >= 94 && spo2 <= 95) news2Score += 1;
+    }
+
+    // Blood Pressure (Systolic)
+    if (vitals.blood_pressure) {
+        const systolic = parseInt(vitals.blood_pressure.split('/')[0]) || 0;
+        if (systolic <= 90) news2Score += 3;
+        else if (systolic >= 91 && systolic <= 100) news2Score += 2;
+        else if (systolic >= 101 && systolic <= 110) news2Score += 1;
+        else if (systolic >= 220) news2Score += 3;
+    }
+
+    // Heart Rate
+    if (vitals.heart_rate) {
+        const hr = vitals.heart_rate;
+        if (hr <= 40) news2Score += 3;
+        else if (hr >= 41 && hr <= 50) news2Score += 1;
+        else if (hr >= 91 && hr <= 110) news2Score += 1;
+        else if (hr >= 111 && hr <= 130) news2Score += 2;
+        else if (hr >= 131) news2Score += 3;
+    }
+
+    // Temperature
+    if (vitals.temperature) {
+        const temp = parseFloat(vitals.temperature);
+        if (temp <= 35.0) news2Score += 3;
+        else if (temp >= 35.1 && temp <= 36.0) news2Score += 1;
+        else if (temp >= 38.1 && temp <= 39.0) news2Score += 1;
+        else if (temp >= 39.1) news2Score += 2;
+    }
+
+    // Map NEWS2 (0-20) to 0-100 scale
+    let riskScore;
+    if (news2Score === 0) riskScore = 10;
+    else if (news2Score <= 4) riskScore = 20 + (news2Score * 7);
+    else if (news2Score <= 6) riskScore = 50 + (news2Score * 3);
+    else riskScore = Math.min(70 + (news2Score * 4), 100);
+
+    return riskScore;
+}
+
+// ============================================================================
+// Helper: Sync Patient Risk Score from Latest Vitals
+// ============================================================================
+async function syncPatientRiskScore(patientId) {
+    try {
+        // Get patient's current vitals
+        const { data: patient } = await supabase
+            .from('patients')
+            .select('heart_rate, blood_pressure, oxygen_saturation, temperature, respiratory_rate, risk_score')
+            .eq('id', patientId)
+            .single();
+
+        if (!patient) return;
+
+        // Calculate risk score from current vitals
+        const calculatedScore = calculateNEWS2Score(patient);
+
+        // Only update if score changed
+        if (calculatedScore !== patient.risk_score) {
+            console.log(`[SYNC] Updating patient ${patientId} risk_score: ${patient.risk_score} → ${calculatedScore}`);
+            await supabase
+                .from('patients')
+                .update({ risk_score: calculatedScore })
+                .eq('id', patientId);
+        }
+    } catch (error) {
+        console.error(`[SYNC] Failed to sync risk_score for patient ${patientId}:`, error);
+    }
+}
+
+// ============================================================================
 // GET /api/critical/hospitals/:region - Get all active hospitals in a region
 // ============================================================================
 router.get('/hospitals/:region', async (req, res) => {
@@ -129,7 +220,10 @@ router.post('/share', async (req, res) => {
             });
         }
 
-        // 2. Mark patient as critical
+        // 2. Sync risk_score from latest vitals to ensure accuracy
+        await syncPatientRiskScore(patient_id);
+
+        // 3. Mark patient as critical
         await supabase
             .from('patients')
             .update({ is_critical: true })
