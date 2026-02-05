@@ -216,17 +216,24 @@ router.post('/', clinicAuth, async (req, res) => {
         console.log(`[POST /vitals] Patient ${patient_id} Risk Score: ${score}/100`);
         console.log(`[POST /vitals] Alerts: ${alerts.join(', ')}`);
 
-        // Update patient's risk_score in database
-        console.log(`[POST /vitals] 🔄 Updating risk_score to ${score}...`);
-        const { error: scoreUpdateError } = await supabase
+        // Update patient's vitals AND risk_score in database
+        console.log(`[POST /vitals] 🔄 Updating patient vitals and risk_score to ${score}...`);
+        const { error: patientUpdateError } = await supabase
             .from('patients')
-            .update({ risk_score: score })
+            .update({
+                heart_rate,
+                blood_pressure,
+                oxygen_saturation: spo2,
+                temperature,
+                respiratory_rate,
+                risk_score: score
+            })
             .eq('id', patient_id);
 
-        if (scoreUpdateError) {
-            console.error(`[POST /vitals] ❌ Failed to update risk_score:`, scoreUpdateError);
+        if (patientUpdateError) {
+            console.error(`[POST /vitals] ❌ Failed to update patient vitals:`, patientUpdateError);
         } else {
-            console.log(`[POST /vitals] ✅ Risk score updated successfully`);
+            console.log(`[POST /vitals] ✅ Patient vitals and risk score updated successfully`);
         }
 
         let isCriticalUpdate = false;
